@@ -28,3 +28,9 @@ function letters(input){
     var regex = /[^A-Z-\s]/g;
     input.value = input.value.replace(regex, '');
 }
+function reloadPage() {
+    location.reload(); // This line reloads the current page
+}
+function compute(){
+    console.log('success');
+}

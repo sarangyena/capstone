@@ -19,7 +19,7 @@ include ('../../includes/admin/header.php');
                             <form method="POST" class="d-flex" action="../../private/search_process.php">
                                 <div class="input-group">
                                     <span class="input-group-text">SEARCH</span>
-                                    <input type="text" class="form-control" name="bar" oninput="up(this)" tabindex="1" required>
+                                    <input type="search" class="form-control" name="bar" oninput="up(this)" tabindex="1" required>
                                 </div>
                                 <div class="input-group mx-2 ">
                                     <label class="input-group-text">FILTER</label>
@@ -48,8 +48,9 @@ include ('../../includes/admin/header.php');
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-warning" name="search" tabindex="3">SEARCH</button>
+                                <button type="button" class="btn btn-warning ms-2" name="reload" tabindex="4" onclick="reloadPage()"><i class="fa-solid fa-rotate-right"></i></button>
                             </form>
-                            <div class="table-responsive text-center" style="width: 1000px;">
+                            <div class="table-responsive text-center" style="width: 1039px;">
                                 <table class="table table-sm table-bordered mt-3">
                                     <thead>
                                         <tr>

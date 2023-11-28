@@ -122,4 +122,13 @@ function search($search, $filter){
         }
     }
 }
+function dispEmp(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT uid, last, first FROM employee');
+    if($stmt->execute()){
+        while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            echo '<option value="'.$result['uid'].'">'.$result['first'].' '.$result['last'].'</option>';
+        }
+    }
+}
 ?>

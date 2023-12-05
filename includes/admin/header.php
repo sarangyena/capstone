@@ -47,16 +47,16 @@ checkAuthentication();
                                 <a class="nav-link text-center text-black" id="payroll" href="payroll.php">PAYROLL</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="report" href="employee.php">REPORT</a>
+                                <a class="nav-link text-center text-black" id="report" href="report.php">REPORT</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="about" href="employee.php">ABOUT</a>
+                                <a class="nav-link text-center text-black" id="about" href="about.php">ABOUT</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="admin" href="employee.php">REGISTER ADMIN</a>
+                                <a class="nav-link text-center text-black" id="admin" href="regAdmin.php">REGISTER ADMIN</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="password" href="employee.php">CHANGE PASSWORD</a>
+                                <a class="nav-link text-center text-black" id="password" href="changePass.php">CHANGE PASSWORD</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-center text-black" id="out" href="../../private/out_process.php">LOG OUT</a>

@@ -1,12 +1,19 @@
 <?php
 session_start();
 require ('../private/database.php');
-if(isset($_POST['bar']) && (isset($_POST['filter']))){
-    $search = $_POST['bar'];
-    $filter = $_POST['filter'];
-    $_SESSION['bar'] = $search;
-    $_SESSION['filter'] = $filter;
+if(isset($_POST['empBar']) && (isset($_POST['empFilter']))){
+    $search = $_POST['empBar'];
+    $filter = $_POST['empFilter'];
+    $_SESSION['empBar'] = $search;
+    $_SESSION['empFilter'] = $filter;
     echo header('Location: ../public/admin/viewEmp.php');
+    exit();
+}else if(isset($_POST['payrollBar']) && (isset($_POST['payrollFilter']))){
+    $search = $_POST['payrollBar'];
+    $filter = $_POST['payrollFilter'];
+    $_SESSION['payrollBar'] = $search;
+    $_SESSION['payrollFilter'] = $filter;
+    echo header('Location: ../public/admin/report.php');
     exit();
 }else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Access the sent data using $_POST superglobal

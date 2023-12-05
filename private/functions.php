@@ -43,6 +43,18 @@ function empId(){
     $uniqueID = "EMP-$year-$id";
     return $uniqueID;
 }
+function adminId(){
+    require (__DIR__ . '/database.php');
+    $year = date('y');
+    $stmt = $conn->prepare('SELECT * FROM admin1');
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $rows = $stmt->rowCount();
+    $id = str_pad($rows, 5, '0', STR_PAD_LEFT);
+
+    $uniqueID = "ADMIN-$year-$id";
+    return $uniqueID;
+}
 function countData(){
     require (__DIR__ . '/database.php');
     $role = $_SESSION['role'];
@@ -62,7 +74,7 @@ function countData(){
         }
     }
 }
-function tableData(){
+function tableEmp(){
     require (__DIR__ . '/database.php');
     $stmt = $conn->prepare('SELECT * FROM employee');
     if($stmt->execute()){
@@ -92,7 +104,7 @@ function tableData(){
         }
     }
 }
-function search($search, $filter){
+function searchEmp($search, $filter){
     require (__DIR__ . '/database.php');
     $stmt = $conn->prepare('SELECT * FROM employee WHERE '.$filter.' LIKE :search');
     if($stmt->execute(['search' => '%'.$search.'%'])){
@@ -127,7 +139,61 @@ function dispEmp(){
     $stmt = $conn->prepare('SELECT uid, last, first FROM employee');
     if($stmt->execute()){
         while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-            echo '<option value="'.$result['uid'].'">'.$result['first'].' '.$result['last'].'</option>';
+            echo '<option value="'.$result['uid'].'">'.$result['first'].' '.$result['last'].' ('.$result['uid'].')</option>';
+        }
+    }
+}
+function searchPayroll($search, $filter){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM payroll WHERE '.$filter.' LIKE :search');
+    if($stmt->execute(['search' => '%'.$search.'%'])){
+        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            echo '<tr>';
+            echo '<td>'.$result['uid'].'</td>';
+            echo '<td>'.$result['name'].'</td>';
+            echo '<td>'.$result['date'].'</td>';
+            echo '<td>'.$result['job'].'</td>';
+            echo '<td>'.$result['days'].'</td>';
+            echo '<td>'.$result['late'].'</td>';
+            echo '<td>'.$result['rate'].'</td>';
+            echo '<td>'.$result['salary'].'</td>';
+            echo '<td>'.$result['rph'].'</td>';
+            echo '<td>'.$result['hours'].'</td>';
+            echo '<td>'.$result['otPay'].'</td>';
+            echo '<td>'.$result['holiday'].'</td>';
+            echo '<td>'.$result['allowances'].'</td>';
+            echo '<td>'.$result['philHealth'].'</td>';
+            echo '<td>'.$result['sss'].'</td>';
+            echo '<td>'.$result['advance'].'</td>';
+            echo '<td>'.$result['amount'].'</td>';
+            echo '</tr>';
+        }
+    }
+}
+function tablePayroll(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM payroll');
+    if($stmt->execute()){
+        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            echo '<tr>';
+            echo '<td>'.$result['uid'].'</td>';
+            echo '<td>'.$result['name'].'</td>';
+            echo '<td>'.$result['date'].'</td>';
+            echo '<td>'.$result['job'].'</td>';
+            echo '<td>'.$result['days'].'</td>';
+            echo '<td>'.$result['late'].'</td>';
+            echo '<td>'.$result['rate'].'</td>';
+            echo '<td>'.$result['salary'].'</td>';
+            echo '<td>'.$result['rph'].'</td>';
+            echo '<td>'.$result['hours'].'</td>';
+            echo '<td>'.$result['otPay'].'</td>';
+            echo '<td>'.$result['holiday'].'</td>';
+            echo '<td>'.$result['allowances'].'</td>';
+            echo '<td>'.$result['philHealth'].'</td>';
+            echo '<td>'.$result['sss'].'</td>';
+            echo '<td>'.$result['advance'].'</td>';
+            echo '<td>'.$result['amount'].'</td>';
+            echo '</tr>';
         }
     }
 }

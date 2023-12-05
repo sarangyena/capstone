@@ -19,11 +19,11 @@ include ('../../includes/admin/header.php');
                             <form method="POST" class="d-flex" action="../../private/search_process.php">
                                 <div class="input-group">
                                     <span class="input-group-text">SEARCH</span>
-                                    <input type="search" class="form-control" name="bar" oninput="up(this)" tabindex="1" required>
+                                    <input type="search" class="form-control" name="empBar" oninput="up(this)" tabindex="1" required>
                                 </div>
                                 <div class="input-group mx-2 ">
                                     <label class="input-group-text">FILTER</label>
-                                    <select class="form-select" name="filter" tabindex="2" required>
+                                    <select class="form-select" name="empFilter" tabindex="2" required>
                                         <option value="" disabled selected></option>
                                         <option value="uid">ID</option>
                                         <option value="hired">HIRED</option>
@@ -38,7 +38,7 @@ include ('../../includes/admin/header.php');
                                         <option value="phone">PHONE</option>
                                         <option value="status">STATUS</option>
                                         <option value="sss">SSS</option>
-                                        <option value="philHealth">PHILHEALT</option>
+                                        <option value="philHealth">PHILHEALTH</option>
                                         <option value="job">JOB</option>
                                         <option value="rate">RATE</option>
                                         <option value="address">ADDRESS</option>
@@ -84,9 +84,9 @@ include ('../../includes/admin/header.php');
                                                 $filter = $_SESSION['filter'];
                                                 unset($_SESSION['bar']);
                                                 unset($_SESSION['filter']);
-                                                search($search, $filter);
+                                                searchEmp($search, $filter);
                                             }else{
-                                                tableData();
+                                                tableEmp();
                                             }
                                             ?>
                                         </tr>

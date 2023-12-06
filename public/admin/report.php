@@ -34,47 +34,9 @@ include ('../../includes/admin/header.php');
                             <button type="submit" class="btn btn-warning" name="search" tabindex="3">SEARCH</button>
                             <button type="button" class="btn btn-warning ms-2" name="reload" tabindex="4" onclick="reloadPage()"><i class="fa-solid fa-rotate-right"></i></button>
                         </form>
-                        <div class="table-responsive text-center">
-                            <table class="table table-sm table-bordered mt-3">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">NAME</th>
-                                        <th scope="col">DATE</th>
-                                        <th scope="col">JOB</th>
-                                        <th scope="col">NO. OF DAYS</th>
-                                        <th scope="col">LATE</th>
-                                        <th scope="col">RATE</th>
-                                        <th scope="col">SALARY</th>
-                                        <th scope="col">RATE PER HOUR</th>
-                                        <th scope="col">NO. OF HOURS</th>
-                                        <th scope="col">OVERTIME PAY</th>
-                                        <th scope="col">HOLIDAY</th>
-                                        <th scope="col">ALLOWANCES</th>
-                                        <th scope="col">PHILHEALTH</th>
-                                        <th scope="col">SSS</th>
-                                        <th scope="col">ADVANCE</th>
-                                        <th scope="col">AMOUNT</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-group-divider text-center">
-                                    <tr>
-                                        <?php
-                                        if(isset($_SESSION['payrollBar']) && (isset($_SESSION['payrollFilter']))){
-                                            $search = $_SESSION['payrollBar'];
-                                            $filter = $_SESSION['payrollFilter'];
-                                            unset($_SESSION['payrollBar']);
-                                            unset($_SESSION['filter']);
-                                            searchPayroll($search, $filter);
-                                        }else{
-                                            tablePayroll();
-                                        }
-                                        ?>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
+                        <?php
+                        tablePayroll();
+                        ?>
                     </div>
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {

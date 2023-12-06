@@ -41,21 +41,21 @@ include ('../../includes/admin/header.php');
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">NO. OF DAYS</span>
-                                        <input type="text" class="form-control" name="compute1" id="days" placeholder="0" oninput="num(this); computes()" tabindex="2" required>
+                                        <input type="text" class="form-control" name="compute1" id="days" value="0" oninput="num(this); computes()" tabindex="2" required>
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">RATE</span>
-                                        <input type="text" class="form-control" name="compute3" id="rate" placeholder="0" readonly required>
+                                        <input type="text" class="form-control" name="compute3" id="rate" value="0" readonly required>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">LATE</span>
-                                        <input type="text" class="form-control" name="compute2" id="late" placeholder="0" oninput="num(this); computes();" tabindex="3" required>
+                                        <input type="text" class="form-control" name="compute2" id="late" value="0" oninput="num(this); computes();" tabindex="3" required>
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">SALARY</span>
-                                        <input type="text" class="form-control" name="compute4" id="salary" placeholder="0" readonly required>
+                                        <input type="text" class="form-control" name="compute4" id="salary" value="0" readonly required>
                                     </div>
                                 </div>
                             </div>
@@ -64,19 +64,19 @@ include ('../../includes/admin/header.php');
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">RATE PER HOUR</span>
-                                        <input type="text" class="form-control" name="compute5" id="rph" placeholder="0" readonly required>
+                                        <input type="text" class="form-control" name="compute5" id="rph" value="0" readonly required>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">NO. OF HOURS</span>
-                                        <input type="text" class="form-control" name="compute6" id="hours" placeholder="0" oninput="num(this); computes();" tabindex="4" required>
+                                        <input type="text" class="form-control" name="compute6" id="hours" value="0" oninput="num(this); computes();" tabindex="4" required>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">OVERTIME PAY</span>
-                                        <input type="text" class="form-control" name="compute7" id="otPay" placeholder="0" readonly required>
+                                        <input type="text" class="form-control" name="compute7" id="otPay" value="0" readonly required>
                                     </div>
                                 </div>
                             </div>
@@ -85,30 +85,30 @@ include ('../../includes/admin/header.php');
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">HOLIDAY</span>
-                                        <input type="text" class="form-control" name="compute8" id="holiday" placeholder="0" oninput="num(this); computes();" tabindex="5">
+                                        <input type="text" class="form-control" name="compute8" id="holiday" value="0" oninput="num(this); computes();" tabindex="5">
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">PHILHEALTH</span>
-                                        <input type="text" class="form-control" name="compute10" id="philHealth" placeholder="0" oninput="num(this); computes();" tabindex="7">
+                                        <input type="text" class="form-control" name="compute10" id="philHealth" value="0" oninput="num(this); computes();" tabindex="7">
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">CASH ADVANCE</span>
-                                        <input type="text" class="form-control" name="compute12" id="advance" placeholder="0" oninput="num(this); computes();" tabindex="9">
+                                        <input type="text" class="form-control" name="compute12" id="advance" value="0" oninput="num(this); computes();" tabindex="9">
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">ALLOWANCES</span>
-                                        <input type="text" class="form-control" name="compute9" id="allowance" placeholder="0" oninput="num(this); computes();" tabindex="6">
+                                        <input type="text" class="form-control" name="compute9" id="allowance" value="0" oninput="num(this); computes();" tabindex="6">
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">SSS</span>
-                                        <input type="text" class="form-control" name="compute11" id="sss" placeholder="0" oninput="num(this); computes();" tabindex="8">
+                                        <input type="text" class="form-control" name="compute11" id="sss" value="0" oninput="num(this); computes();" tabindex="8">
                                     </div>
                                 </div>
                                 <div class="input-group mt-2 border-top pt-2">
                                     <span class="input-group-text">TOTAL AMOUNT</span>
-                                    <input type="text" class="form-control" name="compute13" id="amount" placeholder="0" oninput="num(this); computes();" readonly required>
+                                    <input type="text" class="form-control" name="compute13" id="amount" value="0" oninput="num(this); computes();" readonly required>
                                 </div>
                                 <div class="d-flex mt-3">
                                     <button type="submit" class="btn btn-warning ms-auto" name="compute" tabindex="10">ADD PAYROLL</button>

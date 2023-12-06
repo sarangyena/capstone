@@ -50,49 +50,10 @@ include ('../../includes/admin/header.php');
                                 <button type="submit" class="btn btn-warning" name="search" tabindex="3">SEARCH</button>
                                 <button type="button" class="btn btn-warning ms-2" name="reload" tabindex="4" onclick="reloadPage()"><i class="fa-solid fa-rotate-right"></i></button>
                             </form>
-                            <div class="table-responsive text-center" style="width: 1039px;">
-                                <table class="table table-sm table-bordered mt-3">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">HIRED</th>
-                                            <th scope="col">LAST</th>
-                                            <th scope="col">FIRST</th>
-                                            <th scope="col">MIDDLE</th>
-                                            <th scope="col">SUFFIX</th>
-                                            <th scope="col">BIRTHDAY</th>
-                                            <th scope="col">AGE</th>
-                                            <th scope="col">GENDER</th>
-                                            <th scope="col">EMAIL</th>
-                                            <th scope="col">PHONE</th>
-                                            <th scope="col">STATUS</th>
-                                            <th scope="col">SSS</th>
-                                            <th scope="col">PHILHEALTH</th>
-                                            <th scope="col">JOB</th>
-                                            <th scope="col">RATE</th>
-                                            <th scope="col">ADDRESS</th>
-                                            <th scope="col">ENAME</th>
-                                            <th scope="col">EPHONE</th>
-                                            <th scope="col">EADD</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider text-center">
-                                        <tr>
-                                            <?php
-                                            if(isset($_SESSION['bar']) && (isset($_SESSION['filter']))){
-                                                $search = $_SESSION['bar'];
-                                                $filter = $_SESSION['filter'];
-                                                unset($_SESSION['bar']);
-                                                unset($_SESSION['filter']);
-                                                searchEmp($search, $filter);
-                                            }else{
-                                                tableEmp();
-                                            }
-                                            ?>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            
+                            <?php
+                            tableEmp();
+                            ?>
                         </div>
                     </div>
                     <script>

@@ -12,7 +12,7 @@ if(isset($_POST['add'])){
             ${'add'.$i} = $_POST['add'.$i];
         }
         $hashed = password_hash($add2, PASSWORD_BCRYPT);
-        $stmt = $conn->prepare('INSERT INTO admin1 (uid, hired, last, first, middle, suffix, birthday, age, gender, email, phone, status, sss, philHealth, job, rate, address, eName, ePhone, eAdd, hashed) VALUES (:uid, :hired, :add2, :add3, :add4, :add5, :add6, :add7, :add8, :add9, :add10, :add11, :add12, :add13, :add14, :add15, :add16, :add17, :add18, :add19, :hashed)');
+        $stmt = $conn->prepare('INSERT INTO admin (uid, hired, last, first, middle, suffix, birthday, age, gender, email, phone, status, sss, philHealth, job, rate, address, eName, ePhone, eAdd, hashed) VALUES (:uid, :hired, :add2, :add3, :add4, :add5, :add6, :add7, :add8, :add9, :add10, :add11, :add12, :add13, :add14, :add15, :add16, :add17, :add18, :add19, :hashed)');
         for($i = 0; $i < 21; $i++){
             if ($i == 0){
                 $stmt->bindParam(':uid', $username, PDO::PARAM_STR);

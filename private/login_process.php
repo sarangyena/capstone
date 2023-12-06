@@ -39,7 +39,7 @@ if (isset($_POST['login'])) {
             $hashed = $result['hashed'];
             if(password_verify($password, $hashed)){
                 $_SESSION['user_id'] = $username;
-                echo header ('Location: ../public/admin/homepage.php');
+                echo header ('Location: ../public/employee/homepage.php');
                 exit();
             }else{
                 $_SESSION['alert'] = "Failed";

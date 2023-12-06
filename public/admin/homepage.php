@@ -18,16 +18,13 @@ include ('../../includes/admin/header.php');
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-        let pill = document.getElementById("homepage");
-        homepage.classList.remove('text-black');
-        homepage.className += " bg-success text-white active";
-    });
-    </script>
-</body>
-</html>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function() {
+                        let pill = document.getElementById("homepage");
+                        homepage.classList.remove('text-black');
+                        homepage.className += " bg-success text-white active";
+                    });
+                    </script>
+<?php
+include ('../../includes/admin/footer.php');
+?>

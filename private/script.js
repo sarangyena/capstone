@@ -52,3 +52,29 @@ function computes(){
 function reloadPage() {
     location.reload(); // This line reloads the current page
 }
+function checkPassword() {
+    var password = document.getElementById('new').value;
+    var change = document.getElementById('confirm').value;
+    var success = document.getElementById('success');
+    var fail = document.getElementById('fail');
+    var button = document.getElementById('change');
+
+    if(password == change){
+        success.hidden = false;
+        fail.hidden = true;
+        button.disabled = false;
+    }else{
+        fail.hidden = false;
+        success.hidden = true;
+        button.disabled = true;
+    }
+}
+function timeDate() {
+    const date = document.getElementById("date");
+    const time = document.getElementById("time");
+    const now = new Date();
+    const timeString = now.toLocaleTimeString(); // Get the date and time as a string
+    const dateString = now.toLocaleDateString(); // Get the date and time as a string
+    date.textContent = 'Date: ' + dateString; // Update the HTML element
+    time.textContent = 'Time: ' + timeString; // Update the HTML element
+}

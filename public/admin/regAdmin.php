@@ -151,7 +151,7 @@ include ('../../includes/admin/header.php');
                             </div>
                             <div>
                                 <div class="d-flex mt-3">
-                                    <button type="submit" class="btn btn-warning ms-auto" name="add" tabindex="19">ADD EMPLOYEE</button>
+                                    <button type="submit" class="btn btn-warning ms-auto" name="add" tabindex="19">ADD ADMIN</button>
                                     <button type="button" class="btn btn-warning ms-2" onclick="clearForm()" tabindex="20">CLEAR</button>
                                 </div>
                             </div>

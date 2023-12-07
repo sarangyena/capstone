@@ -56,7 +56,7 @@ require ('../private/functions.php');
                     <h3 class="text-white border-bottom d-inline-block">SCAN QR CODE:</h3>
                     <div class="form-floating">
                         <input type="text" name="username" id="username" class="form-control" placeholder="USERNAME" readonly>
-                        <label for="username" class="form-label">Username:</label>
+                        <label for="username" class="form-label">ID NUMBER:</label>
                     </div>
                     <div class="alert alert-success mt-2" id="in" role="alert" hidden>
                         Successfully timed-in.
@@ -108,19 +108,16 @@ require ('../private/functions.php');
                 var timeOut = document.getElementById('out');
                 var error = document.getElementById('error');
                 if(data.in === true){
-                    location.reload();
                     timeIn.hidden = false;
                     timeOut.hidden = true;
                     error.hidden = true;
                     data.in = '';
                 }else if(data.out === true){
-                    location.reload();
                     timeIn.hidden = true;
                     timeOut.hidden = false;
                     error.hidden = true;
                     data.out = '';
                 }else if(data.error === true){
-                    location.reload();
                     timeIn.hidden = true;
                     timeOut.hidden = true;
                     error.hidden = false;

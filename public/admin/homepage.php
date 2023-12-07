@@ -12,6 +12,9 @@ include ('../../includes/admin/header.php');
                             </div>
                             <div class="col rounded bg-white mx-2 d-flex flex-column p-3">
                                 <h2 class="text-center text-black border-bottom border-black">ACTIVE</h2>
+                                <?php
+                                timedIn();
+                                ?>
                             </div>
                             <div class="col rounded bg-white d-flex flex-column p-3">
                                 <h2 class="text-center text-black border-bottom border-black">NOT ACTIVE</h2>

@@ -90,7 +90,7 @@ function tableEmp(){
                 searchEmp($search, $filter);
             }else{
                 echo '<div class="table-responsive text-center" style="width: 1039px;">
-                <table class="table table-sm table-bordered mt-3">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -160,7 +160,7 @@ function searchEmp($search, $filter){
         </div>';
         }else{
             echo '<div class="table-responsive text-center" style="width: 1039px;">
-                <table class="table table-sm table-bordered mt-3">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -238,7 +238,7 @@ function searchPayroll($search, $filter){
         </div>';
         }else{
             echo '<div class="table-responsive text-center" style="width: 1063px;">
-                <table class="table table-sm table-bordered mt-3">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -308,7 +308,7 @@ function tablePayroll(){
                 searchPayroll($search, $filter);
             }else{
                 echo '<div class="table-responsive text-center" style="width: 1063px;">
-                <table class="table table-sm table-bordered mt-3">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -412,7 +412,7 @@ function reportEmp(){
         </div>';
         }else{
             echo '<div class="table-responsive text-center" style="width: 1063px;">
-                <table class="table table-sm table-bordered mt-3">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -476,7 +476,7 @@ function recordTable(){
         </div>';
         }else{
             echo '<div class="table-responsive text-center">
-            <table class="table table-sm table-bordered mt-3">
+            <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                 <thead>
                     <tr>
                         <th scope="col">ID</th>
@@ -505,5 +505,56 @@ function recordTable(){
     </div>';
         }
     }
+}
+function recordEmp(){
+    require (__DIR__ . '/database.php');
+    $username = $_SESSION['user_id'];
+    $stmt = $conn->prepare('SELECT * FROM record WHERE uid = :id');
+    $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+    if($stmt->execute()){
+        $result = $stmt->rowCount();
+        if($result == 0){
+            echo '<div class="alert alert-info mt-3" role="alert">
+            No data to be displayed.
+        </div>';
+        }else{
+            echo '<div class="table-responsive text-center">
+            <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">DATE-IN</th>
+                        <th scope="col">TIME-IN</th>
+                        <th scope="col">DATE-OUT</th>
+                        <th scope="col">TIME-OUT</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider text-center">
+                    <tr>';
+            while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                echo '<tr>';
+                echo '<td>'.$result['uid'].'</td>';
+                echo '<td>'.$result['name'].'</td>';
+                echo '<td>'.$result['dateIn'].'</td>';
+                echo '<td>'.$result['timeIn'].'</td>';
+                echo '<td>'.$result['dateOut'].'</td>';
+                echo '<td>'.$result['timeOut'].'</td>';
+                echo '</tr>';
+            }
+            echo '</tr>
+            </tbody>
+        </table>
+    </div>';
+        }
+    }
+}
+function timedIn(){
+    require (__DIR__ . '/database.php');
+    if(isset($_SESSION['record'])){
+        $count = count($_SESSION['record']);
+        echo '<div class="alert alert-info my-auto" role="alert">
+        <h1 class="text-black text-center my-auto">'.$count.'</h1>
+    </div>';    }
 }
 ?>

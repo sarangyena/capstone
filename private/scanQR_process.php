@@ -13,18 +13,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if($result){
             $name = $result['last'].', '.$result['first'];
             if(!isset($_SESSION[$username])){
-                $_SESSION[$username] = true;
-                $stmt=$conn->prepare('INSERT INTO record (uid, name, dateIn, timeIn) VALUES (:id, :name, NOW(), NOW())');
-                $stmt->bindParam(':id', $username, PDO::PARAM_STR);
-                $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-                $stmt->execute();
-                $in = true;
-                echo json_encode(['in' => $in]);
+                if(!isset($record)){
+                    $record = array();
+                    $_SESSION[$username] = true;
+                    $record[$username] = $_SESSION[$username];
+                    $_SESSION['record'] = $record;
+                    $stmt=$conn->prepare('INSERT INTO record (uid, name, dateIn, timeIn) VALUES (:id, :name, NOW(), NOW())');
+                    $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+                    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+                    $stmt->execute();
+                    $in = true; 
+                    echo json_encode(['in' => $in]);
+                }else{
+                    $_SESSION[$username] = true;
+                    $record[$username] = $_SESSION[$username];
+                    $_SESSION['record'] = $record;
+                    $stmt=$conn->prepare('INSERT INTO record (uid, name, dateIn, timeIn) VALUES (:id, :name, NOW(), NOW())');
+                    $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+                    $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+                    $stmt->execute();
+                    $in = true;
+                    echo json_encode(['in' => $in]);
+                }
+                
             }else{
                 $stmt=$conn->prepare('UPDATE record SET dateOut = NOW(), timeOut = NOW() WHERE uid = :id ORDER BY timeIn DESC LIMIT 1');
                 $stmt->bindParam(':id', $username, PDO::PARAM_STR);
                 $stmt->execute();
                 unset($_SESSION[$username]);
+                unset($record[$username]);
+                $_SESSION['record'] = $record;
                 $out = true;
                 echo json_encode(['out' => $out]);
             }

@@ -1,3 +1,9 @@
+<?php
+session_start();
+require('private/database.php');
+require('private/functions.php');
+checkAdmin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,7 +45,6 @@
                     <input type="password" class="form-control" placeholder="Password" name="password" tabindex="2" required>
                 </div>
                 <?php
-                session_start();
                 if(isset($_SESSION['alert'])){
                     echo '<div class="alert alert-danger mt-2" role="alert">
                         Invalid Username or Password.

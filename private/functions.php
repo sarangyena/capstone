@@ -55,22 +55,16 @@ function adminId(){
 }
 function countData(){
     require (__DIR__ . '/database.php');
-    $role = $_SESSION['role'];
-    if($role == 'ADMIN'){
-        $stmt = $conn->prepare('SELECT * FROM employee');
-        if($stmt->execute()){
-            $result = $stmt->rowCount();
-            echo '<div class="alert alert-info my-auto" role="alert">
-                    <h1 class="text-black text-center my-auto">'.$result.'</h1>
+    $stmt = $conn->prepare('SELECT * FROM admin');
+    $stmt->execute();
+    $admin = $stmt->rowCount();
+    $stmt = $conn->prepare('SELECT * FROM employee');
+    $stmt->execute();
+    $employee = $stmt->rowCount();
+    $_SESSION['total'] = $admin + $employee;
+    echo '<div class="alert alert-info my-auto" role="alert">
+                    <h1 class="text-black text-center my-auto">'.$_SESSION['total'].'</h1>
                 </div>';
-        }
-    }else if ($role == 'EMP'){
-        $stmt = $conn->prepare('SELECT * FROM employee');
-        if($stmt->execute()){
-            $result = $stmt->rowCount();
-            return $result;
-        }
-    }
 }
 function tableEmp(){
     require (__DIR__ . '/database.php');
@@ -89,7 +83,7 @@ function tableEmp(){
                 unset($_SESSION['empFilter']);
                 searchEmp($search, $filter);
             }else{
-                echo '<div class="table-responsive text-center" style="width: 1039px;">
+                echo '<div class="table-responsive text-center print-container" style="width: 1039px;">
                 <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
@@ -553,8 +547,63 @@ function timedIn(){
     require (__DIR__ . '/database.php');
     if(isset($_SESSION['record'])){
         $count = count($_SESSION['record']);
+        $_SESSION['countTimed'] = $count;
+        if($count === null){
+            echo '<div class="alert alert-info my-auto" role="alert">
+            <h1 class="text-black text-center my-auto">0</h1>
+        </div>';    
+        }else{
+            echo '<div class="alert alert-info my-auto" role="alert">
+            <h1 class="text-black text-center my-auto">'.$count.'</h1>
+        </div>';  
+        }
+    }else{
         echo '<div class="alert alert-info my-auto" role="alert">
-        <h1 class="text-black text-center my-auto">'.$count.'</h1>
-    </div>';    }
+            <h1 class="text-black text-center my-auto">0</h1>
+        </div>'; 
+    }
+}
+function timedOut(){
+    require (__DIR__ . '/database.php');
+    $total = $_SESSION['total'];
+    if(!isset($_SESSION['countTimed']) || $_SESSION['countTimed'] === 0){
+        echo '<div class="alert alert-info my-auto" role="alert">
+        <h1 class="text-black text-center my-auto">'.$total.'</h1>
+    </div>';  
+    }else{
+        $out = $total-$_SESSION['countTimed'];
+        echo '<div class="alert alert-info my-auto" role="alert">
+            <h1 class="text-black text-center my-auto">'.$out.'</h1>
+        </div>';  
+    }
+}
+function checkAdmin(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM admin');
+    $stmt->execute();
+    $result = $stmt->rowCount();
+    if($result === 0){
+        echo header('Location: 0_admin.php');
+        exit();
+    }
+}
+function deductions(){
+    require (__DIR__ . '/database.php');
+    $username = $_SESSION['user_id'];
+    $stmt=$conn->prepare('SELECT philHealth, sss, advance FROM payroll WHERE uid = :id');
+    $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+    if($stmt->execute()){
+        $total = 0;
+        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $total = $total + $result['philHealth'] + $result['sss'] + $result['advance'];
+        }
+        echo '<div class="alert alert-info my-auto" role="alert">
+                    <h1 class="text-black text-center my-auto">₱ -'.$total.'</h1>
+                </div>';
+    }else{
+        echo '<div class="alert alert-danger my-auto" role="alert">
+                Error.
+                </div>';
+    }
 }
 ?>

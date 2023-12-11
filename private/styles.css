@@ -60,4 +60,21 @@ body{
       font-weight: bold;
     }
   }
+
+  @page{
+    size: A4;
+    margin: 0;
+  }
+  @media print{
+    body * {
+      visibility: hidden;
+    }
+    .print-container, .print-container *{
+      visibility: visible;
+    }
+  }
+  #print-btn{
+    display: none;
+    visibility: none;
+  }
   

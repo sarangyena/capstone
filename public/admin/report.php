@@ -33,6 +33,7 @@ include ('../../includes/admin/header.php');
                             </div>
                             <button type="submit" class="btn btn-warning" name="search" tabindex="3">SEARCH</button>
                             <button type="button" class="btn btn-warning ms-2" name="reload" tabindex="4" onclick="reloadPage()"><i class="fa-solid fa-rotate-right"></i></button>
+                            <button type="button" class="btn btn-warning ms-2" id="print-btn" onclick="window.print();">PRINT</button>
                         </form>
                         <?php
                         tablePayroll();

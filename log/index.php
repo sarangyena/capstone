@@ -58,12 +58,19 @@ require ('../private/functions.php');
                         <input type="text" name="username" id="username" class="form-control" placeholder="USERNAME" readonly>
                         <label for="username" class="form-label">ID NUMBER:</label>
                     </div>
-                    <div class="alert alert-success mt-2" id="in" role="alert" hidden>
+                    <?php
+                    if(isset($_SESSION['in'])){
+                        echo '<div class="alert alert-success mt-2" id="in" role="alert" hidden>
                         Successfully timed-in.
-                    </div>
-                    <div class="alert alert-success mt-2" id="out" role="alert" hidden>
+                    </div>';
+                    }else if(isset($_SESSION['out'])){
+                        echo '<div class="alert alert-success mt-2" id="out" role="alert" hidden>
                         Successfully timed-out.
-                    </div>
+                    </div>';
+                    }
+                    ?>
+                    
+                    
                     <div class="alert alert-danger mt-2" id="error" role="alert" hidden>
                         Error. Try Again.
                     </div>
@@ -104,25 +111,9 @@ require ('../private/functions.php');
             })
             .then(response => response.json())
             .then(data => {
-                var timeIn = document.getElementById('in');
-                var timeOut = document.getElementById('out');
-                var error = document.getElementById('error');
-                if(data.in === true){
-                    timeIn.hidden = false;
-                    timeOut.hidden = true;
-                    error.hidden = true;
-                    data.in = '';
-                }else if(data.out === true){
-                    timeIn.hidden = true;
-                    timeOut.hidden = false;
-                    error.hidden = true;
-                    data.out = '';
-                }else if(data.error === true){
-                    timeIn.hidden = true;
-                    timeOut.hidden = true;
-                    error.hidden = false;
-                    data.error = '';
-                }
+                //history.go(0);
+                console.log(data.in);
+                console.log(data.out);
             })
             .catch(error => {
                 console.error('Error:', error);

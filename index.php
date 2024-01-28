@@ -36,7 +36,7 @@ checkAdmin();
                     <span class="input-group-text">
                         <i class="fa-solid fa-user"></i>
                     </span>
-                    <input type="text" class="form-control" placeholder="Username" name="username" tabindex="1" oninput="up(this)" required>
+                    <input type="text" class="form-control" placeholder="Username" name="username" tabindex="1" required>
                 </div>
                 <div class="input-group mt-3 mb-2">
                     <span class="input-group-text">

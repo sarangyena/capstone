@@ -23,12 +23,9 @@ checkAuthentication();
         <nav class="navbar bg-success-subtle d-flex flex-column">
             <div class="container-fluid">
                 <a class="navbar-brand" href="homepage.php">
-                <img src="../../private/images/logo.png" alt="Logo" class="img-fluid d-inline-block" style="width: 8%;">
-                <h4 class="d-inline-block">AL DA'WAH PRODUCERS COOPERATIVE</h4>
+                    <img src="../../private/images/logo.png" alt="Logo" class="img-fluid d-inline-block" style="width: 8%;">
+                    <h4 class="d-inline-block">AL DA'WAH PRODUCERS COOPERATIVE</h4>
                 </a>
-                <?php
-                displayName();
-                ?>
             </div>
         </nav>
 
@@ -41,7 +38,7 @@ checkAuthentication();
                                 <a class="nav-link text-center text-black" id="homepage" href="homepage.php">HOMEPAGE</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="employee" href="addEmp.php">EMPLOYEE</a>
+                                <a class="nav-link text-center text-black" id="employee" href="addEmp.php" data-bs-toggle="modal" data-bs-target="#staticBackdrop">EMPLOYEE</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-center text-black" id="payroll" href="payroll.php">PAYROLL</a>
@@ -62,6 +59,31 @@ checkAuthentication();
                                 <a class="nav-link text-center text-black" id="out" href="../../private/out_process.php">LOG OUT</a>
                             </li>
                         </ul>
+                    </div>
+                </div>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">ADD EMPLOYEE</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form method="POST" action="../../private/category.php">
+                                <div class="modal-body">
+                                    <div class="input-group mt-2">
+                                        <label class="input-group-text" for="category">CATEGORY</label>
+                                        <select class="form-select" name="category" required>
+                                            <option value="EMPLOYEE">EMPLOYEE</option>
+                                            <option value="ON-CALL">ON-CALL</option>
+                                        </select>
+                                    </div>                         
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+                                    <button type="submit" class="btn btn-primary" name="select">SELECT</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="col">

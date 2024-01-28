@@ -8,6 +8,13 @@ if(isset($_POST['empBar']) && (isset($_POST['empFilter']))){
     $_SESSION['empFilter'] = $filter;
     echo header('Location: ../public/admin/viewEmp.php');
     exit();
+}else if(isset($_POST['onCallBar']) && (isset($_POST['onCallFilter']))){
+    $search = $_POST['onCallBar'];
+    $filter = $_POST['onCallFilter'];
+    $_SESSION['onCallBar'] = $search;
+    $_SESSION['onCallFilter'] = $filter;
+    echo header('Location: ../public/admin/viewOnCall.php');
+    exit();
 }else if(isset($_POST['payrollBar']) && (isset($_POST['payrollFilter']))){
     $search = $_POST['payrollBar'];
     $filter = $_POST['payrollFilter'];

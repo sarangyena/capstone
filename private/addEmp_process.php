@@ -8,17 +8,17 @@ if(isset($_POST['add'])){
         date_default_timezone_set('Asia/Manila');
         $username = empId();
         $hired = date('Y-m-d H:i:s');
-        for($i = 2; $i < 20; $i++){
+        for($i = 1; $i <= 15; $i++){
             ${'add'.$i} = $_POST['add'.$i];
         }
-        $hashed = password_hash($add2, PASSWORD_BCRYPT);
-        $stmt = $conn->prepare('INSERT INTO employee (uid, hired, last, first, middle, suffix, birthday, age, gender, email, phone, status, sss, philHealth, job, rate, address, eName, ePhone, eAdd, hashed) VALUES (:uid, :hired, :add2, :add3, :add4, :add5, :add6, :add7, :add8, :add9, :add10, :add11, :add12, :add13, :add14, :add15, :add16, :add17, :add18, :add19, :hashed)');
-        for($i = 0; $i < 21; $i++){
+        $hashed = password_hash($add1, PASSWORD_BCRYPT);
+        $stmt = $conn->prepare('INSERT INTO employee1 (id, last, first, middle, status, email, phone, job, sss, philhealth, pagibig, rate, address, eName, ePhone, eAddress, hired, hashed) VALUES (:id, :add1, :add2, :add3, :add4, :add5, :add6, :add7, :add8, :add9, :add10, :add11, :add12, :add13, :add14, :add15, :hired, :hashed)');
+        for($i = 0; $i <= 17; $i++){
             if ($i == 0){
-                $stmt->bindParam(':uid', $username, PDO::PARAM_STR);
-            }else if ($i == 1){
+                $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+            }else if ($i == 16){
                 $stmt->bindParam(':hired', $hired, PDO::PARAM_STR);
-            }else if ($i == 20){
+            }else if ($i == 17){
                 $stmt->bindParam(':hashed', $hashed, PDO::PARAM_STR);
             }else{
                 $stmt->bindParam(':add'.$i, ${'add'.$i}, PDO::PARAM_STR);
@@ -36,15 +36,15 @@ if(isset($_POST['add'])){
         $type = $file['type'];
         if($size > 5000000) {
             $_SESSION['error1'] = 'error';
-            echo header('Location: ../public/admin/addEmp.php');
+            echo header('Location: ../public/admin/addOnCall.php');
             exit();
         } else if(!in_array($type, ['image/jpg', 'image/png', 'image/jpeg'])) {
             $_SESSION['error2'] = 'error';
-            echo header('Location: ../public/admin/addEmp.php');
+            echo header('Location: ../public/admin/addOnCall.php');
             exit();
         } else {
             $filename = $uniqueName;
-            $directory = '../private/images/empImage/'; 
+            $directory = '../private/images/employee/'; 
             $uploadPath = $directory . $filename;
             if(move_uploaded_file($tmp_name, $uploadPath)) {
             $stmt= $conn->prepare("INSERT INTO image (uid, name, size, type, path) VALUES (?,?,?,?,?)");
@@ -55,21 +55,21 @@ if(isset($_POST['add'])){
             $stmt->bindParam(5, $uploadPath, PDO::PARAM_STR);
             if($stmt->execute()){
                 $_SESSION['success'] = 'success';
-                echo header('Location: ../public/admin/addEmp.php');
+                echo header('Location: ../public/admin/addOnCall.php');
                 exit();
             }else{
                 $_SESSION['error5'] = 'error';
-                echo header('Location: ../public/admin/addEmp.php');
+                echo header('Location: ../public/admin/addOnCall.php');
                 exit();
             }
             } else {
                 $_SESSION['error3'] = 'error';
-                echo header('Location: ../public/admin/addEmp.php');
+                echo header('Location: ../public/admin/addOnCall.php');
                 exit();
             }
         }
     }else{
-        echo header('Location: ../public/admin/addEmp.php');
+        echo header('Location: ../public/admin/addOnCall.php');
         exit();
     }
 }

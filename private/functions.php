@@ -31,14 +31,22 @@ function displayName(){
 }
 function empId(){
     require (__DIR__ . '/database.php');
-    $year = date('y');
-    $stmt = $conn->prepare('SELECT * FROM employee');
+    $stmt = $conn->prepare('SELECT * FROM employee1');
     $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
     $rows = $stmt->rowCount();
-    $id = str_pad($rows, 5, '0', STR_PAD_LEFT);
+    $id = str_pad($rows, 3, '0', STR_PAD_LEFT);
 
-    $uniqueID = "EMP-$year-$id";
+    $uniqueID = "E-$id";
+    return $uniqueID;
+}
+function onCallId(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM oncall');
+    $stmt->execute();
+    $rows = $stmt->rowCount();
+    $id = str_pad($rows, 3, '0', STR_PAD_LEFT);
+
+    $uniqueID = "O-$id";
     return $uniqueID;
 }
 function adminId(){
@@ -68,7 +76,7 @@ function countData(){
 }
 function tableEmp(){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM employee');
+    $stmt = $conn->prepare('SELECT * FROM employee1');
     if($stmt->execute()){
         $result = $stmt->rowCount();
         if($result == 0){
@@ -88,51 +96,116 @@ function tableEmp(){
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">HIRED</th>
                             <th scope="col">LAST</th>
                             <th scope="col">FIRST</th>
                             <th scope="col">MIDDLE</th>
-                            <th scope="col">SUFFIX</th>
-                            <th scope="col">BIRTHDAY</th>
-                            <th scope="col">AGE</th>
-                            <th scope="col">GENDER</th>
+                            <th scope="col">STATUS</th>
                             <th scope="col">EMAIL</th>
                             <th scope="col">PHONE</th>
-                            <th scope="col">STATUS</th>
+                            <th scope="col">JOB</th>
                             <th scope="col">SSS</th>
                             <th scope="col">PHILHEALTH</th>
-                            <th scope="col">JOB</th>
+                            <th scope="col">PAG-IBIG</th>
                             <th scope="col">RATE</th>
                             <th scope="col">ADDRESS</th>
                             <th scope="col">ENAME</th>
                             <th scope="col">EPHONE</th>
-                            <th scope="col">EADD</th>
+                            <th scope="col">EADDRESS</th>
+                            <th scope="col">HIRED</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider text-center">
                         <tr>';
                             while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                                 echo '<tr>';
-                                echo '<td>'.$result['uid'].'</td>';
-                                echo '<td>'.$result['hired'].'</td>';
+                                echo '<td>'.$result['id'].'</td>';
                                 echo '<td>'.$result['last'].'</td>';
                                 echo '<td>'.$result['first'].'</td>';
                                 echo '<td>'.$result['middle'].'</td>';
-                                echo '<td>'.$result['suffix'].'</td>';
-                                echo '<td>'.$result['birthday'].'</td>';
-                                echo '<td>'.$result['age'].'</td>';
-                                echo '<td>'.$result['gender'].'</td>';
+                                echo '<td>'.$result['status'].'</td>';
                                 echo '<td>'.$result['email'].'</td>';
                                 echo '<td>'.$result['phone'].'</td>';
-                                echo '<td>'.$result['status'].'</td>';
-                                echo '<td>'.$result['sss'].'</td>';
-                                echo '<td>'.$result['philHealth'].'</td>';
                                 echo '<td>'.$result['job'].'</td>';
+                                echo '<td>'.$result['sss'].'</td>';
+                                echo '<td>'.$result['philhealth'].'</td>';
+                                echo '<td>'.$result['pagibig'].'</td>';
                                 echo '<td>'.$result['rate'].'</td>';
                                 echo '<td>'.$result['address'].'</td>';
                                 echo '<td>'.$result['eName'].'</td>';
                                 echo '<td>'.$result['ePhone'].'</td>';
-                                echo '<td>'.$result['eAdd'].'</td>';
+                                echo '<td>'.$result['eAddress'].'</td>';
+                                echo '<td>'.$result['hired'].'</td>';
+                                echo '<tr>';
+                            }
+                        }
+                    echo '</tr>
+                </tbody>
+            </table>
+        </div>';
+        }
+    }
+}
+function tableOnCall(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM oncall');
+    if($stmt->execute()){
+        $result = $stmt->rowCount();
+        if($result == 0){
+            echo '<div class="alert alert-info mt-3" role="alert">
+            No data to be displayed.
+        </div>';
+        }else{
+            if(isset($_SESSION['onCallBar']) && (isset($_SESSION['onCallFilter']))){
+                $search = $_SESSION['onCallBar'];
+                $filter = $_SESSION['onCallFilter'];
+                unset($_SESSION['onCallBar']);
+                unset($_SESSION['onCallFilter']);
+                searchOnCall($search, $filter);
+            }else{
+                echo '<div class="table-responsive text-center print-container" style="width: 1039px;">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">LAST</th>
+                            <th scope="col">FIRST</th>
+                            <th scope="col">MIDDLE</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">PHONE</th>
+                            <th scope="col">JOB</th>
+                            <th scope="col">SSS</th>
+                            <th scope="col">PHILHEALTH</th>
+                            <th scope="col">PAG-IBIG</th>
+                            <th scope="col">RATE</th>
+                            <th scope="col">ADDRESS</th>
+                            <th scope="col">ENAME</th>
+                            <th scope="col">EPHONE</th>
+                            <th scope="col">EADDRESS</th>
+                            <th scope="col">HIRED</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider text-center">
+                        <tr>';
+                            while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                                echo '<tr>';
+                                echo '<td>'.$result['id'].'</td>';
+                                echo '<td>'.$result['last'].'</td>';
+                                echo '<td>'.$result['first'].'</td>';
+                                echo '<td>'.$result['middle'].'</td>';
+                                echo '<td>'.$result['status'].'</td>';
+                                echo '<td>'.$result['email'].'</td>';
+                                echo '<td>'.$result['phone'].'</td>';
+                                echo '<td>'.$result['job'].'</td>';
+                                echo '<td>'.$result['sss'].'</td>';
+                                echo '<td>'.$result['philhealth'].'</td>';
+                                echo '<td>'.$result['pagibig'].'</td>';
+                                echo '<td>'.$result['rate'].'</td>';
+                                echo '<td>'.$result['address'].'</td>';
+                                echo '<td>'.$result['eName'].'</td>';
+                                echo '<td>'.$result['ePhone'].'</td>';
+                                echo '<td>'.$result['eAddress'].'</td>';
+                                echo '<td>'.$result['hired'].'</td>';
                                 echo '<tr>';
                             }
                         }
@@ -145,7 +218,7 @@ function tableEmp(){
 }
 function searchEmp($search, $filter){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM employee WHERE '.$filter.' LIKE :search');
+    $stmt = $conn->prepare('SELECT * FROM employee1 WHERE '.$filter.' LIKE :search');
     if($stmt->execute(['search' => '%'.$search.'%'])){
         $result = $stmt->rowCount();
         if($result == 0){
@@ -158,54 +231,113 @@ function searchEmp($search, $filter){
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">HIRED</th>
                             <th scope="col">LAST</th>
                             <th scope="col">FIRST</th>
                             <th scope="col">MIDDLE</th>
-                            <th scope="col">SUFFIX</th>
-                            <th scope="col">BIRTHDAY</th>
-                            <th scope="col">AGE</th>
-                            <th scope="col">GENDER</th>
+                            <th scope="col">STATUS</th>
                             <th scope="col">EMAIL</th>
                             <th scope="col">PHONE</th>
-                            <th scope="col">STATUS</th>
+                            <th scope="col">JOB</th>
                             <th scope="col">SSS</th>
                             <th scope="col">PHILHEALTH</th>
-                            <th scope="col">JOB</th>
+                            <th scope="col">PAG-IBIG</th>
                             <th scope="col">RATE</th>
                             <th scope="col">ADDRESS</th>
                             <th scope="col">ENAME</th>
                             <th scope="col">EPHONE</th>
-                            <th scope="col">EADD</th>
+                            <th scope="col">EADDRESS</th>
+                            <th scope="col">HIRED</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider text-center">
                         <tr>';
-            while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-                echo '<tr>';
-                echo '<td>'.$result['uid'].'</td>';
-                echo '<td>'.$result['hired'].'</td>';
-                echo '<td>'.$result['last'].'</td>';
-                echo '<td>'.$result['first'].'</td>';
-                echo '<td>'.$result['middle'].'</td>';
-                echo '<td>'.$result['suffix'].'</td>';
-                echo '<td>'.$result['birthday'].'</td>';
-                echo '<td>'.$result['age'].'</td>';
-                echo '<td>'.$result['gender'].'</td>';
-                echo '<td>'.$result['email'].'</td>';
-                echo '<td>'.$result['phone'].'</td>';
-                echo '<td>'.$result['status'].'</td>';
-                echo '<td>'.$result['sss'].'</td>';
-                echo '<td>'.$result['philHealth'].'</td>';
-                echo '<td>'.$result['job'].'</td>';
-                echo '<td>'.$result['rate'].'</td>';
-                echo '<td>'.$result['address'].'</td>';
-                echo '<td>'.$result['eName'].'</td>';
-                echo '<td>'.$result['ePhone'].'</td>';
-                echo '<td>'.$result['eAdd'].'</td>';
-                echo '</tr>';
-            }
-            echo '</tr>
+                        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                            echo '<tr>';
+                            echo '<td>'.$result['id'].'</td>';
+                            echo '<td>'.$result['hired'].'</td>';
+                            echo '<td>'.$result['last'].'</td>';
+                            echo '<td>'.$result['first'].'</td>';
+                            echo '<td>'.$result['middle'].'</td>';
+                            echo '<td>'.$result['status'].'</td>';
+                            echo '<td>'.$result['email'].'</td>';
+                            echo '<td>'.$result['phone'].'</td>';
+                            echo '<td>'.$result['job'].'</td>';
+                            echo '<td>'.$result['sss'].'</td>';
+                            echo '<td>'.$result['philhealth'].'</td>';
+                            echo '<td>'.$result['pagibig'].'</td>';
+                            echo '<td>'.$result['rate'].'</td>';
+                            echo '<td>'.$result['address'].'</td>';
+                            echo '<td>'.$result['eName'].'</td>';
+                            echo '<td>'.$result['ePhone'].'</td>';
+                            echo '<td>'.$result['eAddress'].'</td>';
+                            echo '<td>'.$result['hired'].'</td>';
+                            echo '<tr>';
+                        }
+                echo '</tr>
+                </tbody>
+            </table>
+        </div>';
+        }
+    }
+}
+function searchOnCall($search, $filter){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM oncall WHERE '.$filter.' LIKE :search');
+    if($stmt->execute(['search' => '%'.$search.'%'])){
+        $result = $stmt->rowCount();
+        if($result == 0){
+            echo '<div class="alert alert-info mt-3" role="alert">
+            No data to be displayed.
+        </div>';
+        }else{
+            echo '<div class="table-responsive text-center" style="width: 1039px;">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">LAST</th>
+                            <th scope="col">FIRST</th>
+                            <th scope="col">MIDDLE</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">PHONE</th>
+                            <th scope="col">JOB</th>
+                            <th scope="col">SSS</th>
+                            <th scope="col">PHILHEALTH</th>
+                            <th scope="col">PAG-IBIG</th>
+                            <th scope="col">RATE</th>
+                            <th scope="col">ADDRESS</th>
+                            <th scope="col">ENAME</th>
+                            <th scope="col">EPHONE</th>
+                            <th scope="col">EADDRESS</th>
+                            <th scope="col">HIRED</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider text-center">
+                        <tr>';
+                        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                            echo '<tr>';
+                            echo '<td>'.$result['id'].'</td>';
+                            echo '<td>'.$result['hired'].'</td>';
+                            echo '<td>'.$result['last'].'</td>';
+                            echo '<td>'.$result['first'].'</td>';
+                            echo '<td>'.$result['middle'].'</td>';
+                            echo '<td>'.$result['status'].'</td>';
+                            echo '<td>'.$result['email'].'</td>';
+                            echo '<td>'.$result['phone'].'</td>';
+                            echo '<td>'.$result['job'].'</td>';
+                            echo '<td>'.$result['sss'].'</td>';
+                            echo '<td>'.$result['philhealth'].'</td>';
+                            echo '<td>'.$result['pagibig'].'</td>';
+                            echo '<td>'.$result['rate'].'</td>';
+                            echo '<td>'.$result['address'].'</td>';
+                            echo '<td>'.$result['eName'].'</td>';
+                            echo '<td>'.$result['ePhone'].'</td>';
+                            echo '<td>'.$result['eAddress'].'</td>';
+                            echo '<td>'.$result['hired'].'</td>';
+                            echo '<tr>';
+                        }
+                echo '</tr>
                 </tbody>
             </table>
         </div>';
@@ -604,6 +736,52 @@ function deductions(){
         echo '<div class="alert alert-danger my-auto" role="alert">
                 Error.
                 </div>';
+    }
+}
+function dashboard(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM payroll');
+    if($stmt->execute()){
+        $result = $stmt->rowCount();
+        if($result == 0){
+            echo '<div class="alert alert-info mt-3" role="alert">
+            No data to be displayed.
+        </div>';
+        }else{
+            if(isset($_SESSION['payrollBar']) && (isset($_SESSION['payrollFilter']))){
+                $search = $_SESSION['payrollBar'];
+                $filter = $_SESSION['payrollFilter'];
+                unset($_SESSION['payrollBar']);
+                unset($_SESSION['filter']);
+                searchPayroll($search, $filter);
+            }else{
+                echo '<div class="table-responsive text-center" style="width: 1063px;">
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">JOB</th>
+                            <th scope="col">LAST TIMED-IN (DATE)</th>
+                            <th scope="col">LAST TIMED-IN (TIME)</th>
+                            <th scope="col">LAST TIMED-OUT (DATE)</th>
+                            <th scope="col">LAST TIMED-OUT (DATE)</th>
+                            <th scope="col">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider text-center">
+                        <tr>';
+                while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    echo '<tr>';
+                    echo '<td>'.$result['uid'].'</td>';
+                    echo '</tr>';
+                }
+                echo '</tr>
+                </tbody>
+            </table>
+        </div>';
+            }
+        }
     }
 }
 ?>

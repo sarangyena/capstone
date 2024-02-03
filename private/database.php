@@ -1,4 +1,8 @@
 <?php
+date_default_timezone_set('Asia/Manila');
+$_SESSION['time'] = date('h:i A');
+$_SESSION['date'] = date('Y-m-d');
+
 $hostname = "localhost";
 $username = "root";
 $password = "";

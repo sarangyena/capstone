@@ -2,6 +2,7 @@
 session_start();
 require ('../private/database.php');
 require ('../private/functions.php');
+require_once '../private/phpqrcode/qrlib.php';
 
 if(isset($_POST['add'])){
     if(isset($_FILES['image'])){
@@ -10,6 +11,21 @@ if(isset($_POST['add'])){
         $hired = date('Y-m-d H:i:s');
         for($i = 1; $i <= 15; $i++){
             ${'add'.$i} = $_POST['add'.$i];
+        }
+        $path = 'images/qrcode/';
+        $pathname = $path.$username.".png";
+        $filename = $username.".png";
+        $data = $username;
+
+
+        QRcode::png($data, $pathname, 'H', 4, 4);
+
+        
+        $initial = substr($add3, 0, 1);
+        if ($initial){
+            $name = $add1.', '.$add2.' '.$initial.'.';
+        }else{
+            $name = $add1.', '.$add2;
         }
         $hashed = password_hash($add1, PASSWORD_BCRYPT);
         $stmt = $conn->prepare('INSERT INTO employee1 (id, last, first, middle, status, email, phone, job, sss, philhealth, pagibig, rate, address, eName, ePhone, eAddress, hired, hashed) VALUES (:id, :add1, :add2, :add3, :add4, :add5, :add6, :add7, :add8, :add9, :add10, :add11, :add12, :add13, :add14, :add15, :hired, :hashed)');
@@ -26,6 +42,23 @@ if(isset($_POST['add'])){
         }
         $stmt->execute();
 
+        $status = 'NEW';
+        $stmt = $conn->prepare('INSERT INTO dashboard (id, name, job, status) VALUES (:id, :name, :job, :status)');
+        $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':job', $add7, PDO::PARAM_STR);
+        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $stmt = $conn->prepare('INSERT INTO payroll (id, name, job, rate) VALUES (:id, :name, :job, :rate)');
+        $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':job', $add7, PDO::PARAM_STR);
+        $stmt->bindParam(':rate', $add11, PDO::PARAM_STR);
+        $stmt->execute();
+
+
+
         //Upload Image
         $file = $_FILES['image'];
         $name = $file['name'];
@@ -36,11 +69,11 @@ if(isset($_POST['add'])){
         $type = $file['type'];
         if($size > 5000000) {
             $_SESSION['error1'] = 'error';
-            echo header('Location: ../public/admin/addOnCall.php');
+            echo header('Location: ../public/admin/addEmp.php');
             exit();
         } else if(!in_array($type, ['image/jpg', 'image/png', 'image/jpeg'])) {
             $_SESSION['error2'] = 'error';
-            echo header('Location: ../public/admin/addOnCall.php');
+            echo header('Location: ../public/admin/addEmp.php');
             exit();
         } else {
             $filename = $uniqueName;
@@ -54,22 +87,25 @@ if(isset($_POST['add'])){
             $stmt->bindParam(4, $type, PDO::PARAM_STR);
             $stmt->bindParam(5, $uploadPath, PDO::PARAM_STR);
             if($stmt->execute()){
+
                 $_SESSION['success'] = 'success';
-                echo header('Location: ../public/admin/addOnCall.php');
+                echo header('Location: ../public/admin/addEmp.php');
                 exit();
             }else{
                 $_SESSION['error5'] = 'error';
-                echo header('Location: ../public/admin/addOnCall.php');
+                echo header('Location: ../public/admin/addEmp.php');
                 exit();
             }
             } else {
                 $_SESSION['error3'] = 'error';
-                echo header('Location: ../public/admin/addOnCall.php');
+                echo header('Location: ../public/admin/addEmp.php');
                 exit();
             }
         }
+
+        
     }else{
-        echo header('Location: ../public/admin/addOnCall.php');
+        echo header('Location: ../public/admin/addEmp.php');
         exit();
     }
 }

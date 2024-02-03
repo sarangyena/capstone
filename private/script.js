@@ -78,3 +78,6 @@ function timeDate() {
     date.textContent = 'Date: ' + dateString; // Update the HTML element
     time.textContent = 'Time: ' + timeString; // Update the HTML element
 }
+function qr(){
+    
+}

@@ -36,15 +36,14 @@ require ('../private/functions.php');
             <div class="row">
                 <div class="col-sm">
                     <video id="preview" class="img-fluid mx-auto d-block" style="width: 100%;"></video>
-                    <div class="alert alert-success mt-2" id="in" role="alert" hidden>
-                        Successfully timed-in.
-                    </div>
-                    <div class="alert alert-success mt-2" id="out" role="alert" hidden>
-                        Successfully timed-out.
-                    </div>
-                    <div class="alert alert-danger mt-2" id="error" role="alert" hidden>
-                        Error. Try Again.
-                    </div>
+                    <?php
+                    if(isset($_SESSION['success'])){
+                        echo '<div class="alert alert-success mt-3" role="alert">
+                        Successfully recorded.
+                    </div>';
+                    unset($_SESSION['success']);
+                    }
+                    ?>
                 </div>
                 <div class="col-sm-8">
                     <div class="alert alert-info" role="alert">
@@ -69,20 +68,17 @@ require ('../private/functions.php');
                     </div>';
                     }
                     ?>
-                    
-                    
-                    <div class="alert alert-danger mt-2" id="error" role="alert" hidden>
-                        Error. Try Again.
-                    </div>
                 </div>
             </div>
             <div class="container-fluid">
                 <h1 class="text-white border-bottom d-inline-block">LOG REPORT</h1>
                 <?php
-                recordTable();
+                logTable();
                 ?>
             </div>
             </div>
+        </div>
+        <div id="location">
         </div>
     </div>
     <script>
@@ -100,24 +96,33 @@ require ('../private/functions.php');
         });
 
         scanner.addListener('scan',function(c){
-            document.getElementById('username').value=c;
-            var value = c;
-            fetch('../private/scanQR_process.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'text/plain'                            
-                },
-                body: value
+            navigator.geolocation.getCurrentPosition((position) => {
+                var obj = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                }
+                document.getElementById('username').value=c;
+                obj.user = c;
+
+                fetch('../private/scanQR_process.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'                            
+                    },
+                    body: JSON.stringify(obj)
+                })
+                .then(data => {
+                    // Handle the response data if needed
+                    console.log(data);
+                    // Redirect to another page using JavaScript
+                    window.location.href = '/capstone/log/index.php';
+                })
+
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             })
-            .then(response => response.json())
-            .then(data => {
-                //history.go(0);
-                console.log(data.in);
-                console.log(data.out);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+            
         });
     </script>
 </body>

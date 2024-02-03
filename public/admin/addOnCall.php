@@ -34,7 +34,7 @@ include ('../../includes/admin/header.php');
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
-                                            <button type="submit" class="btn btn-primary" name="select">SELECT</button>
+                                            <button type="submit" class="btn btn-success" name="select">SELECT</button>
                                         </div>
                                     </form>
                                 </div>

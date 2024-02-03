@@ -5,6 +5,11 @@ function checkAuthentication(){
         echo header('Location: ../../index.php');
     }
 }
+function checkLogIn(){
+    if(isset($_SESSION['user_id'])){
+        echo header('Location: public/admin/homepage.php');
+    }
+}
 function displayName(){
     require (__DIR__ . '/database.php');
     $username = $_SESSION['user_id'];
@@ -31,7 +36,7 @@ function displayName(){
 }
 function empId(){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM employee1');
+    $stmt = $conn->prepare('SELECT * FROM employee');
     $stmt->execute();
     $rows = $stmt->rowCount();
     $id = str_pad($rows, 3, '0', STR_PAD_LEFT);
@@ -76,7 +81,7 @@ function countData(){
 }
 function tableEmp(){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM employee1');
+    $stmt = $conn->prepare('SELECT * FROM employee');
     if($stmt->execute()){
         $result = $stmt->rowCount();
         if($result == 0){
@@ -95,6 +100,7 @@ function tableEmp(){
                 <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
+                            <th scope="col">QR</th>
                             <th scope="col">ID</th>
                             <th scope="col">LAST</th>
                             <th scope="col">FIRST</th>
@@ -118,6 +124,7 @@ function tableEmp(){
                         <tr>';
                             while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                                 echo '<tr>';
+                                echo '<td><button class="btn" onclick="qr(`'.$result['id'].'`)"><i class="fa-solid fa-qrcode""></i></button></td>';
                                 echo '<td>'.$result['id'].'</td>';
                                 echo '<td>'.$result['last'].'</td>';
                                 echo '<td>'.$result['first'].'</td>';
@@ -218,7 +225,7 @@ function tableOnCall(){
 }
 function searchEmp($search, $filter){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM employee1 WHERE '.$filter.' LIKE :search');
+    $stmt = $conn->prepare('SELECT * FROM employee WHERE '.$filter.' LIKE :search');
     if($stmt->execute(['search' => '%'.$search.'%'])){
         $result = $stmt->rowCount();
         if($result == 0){
@@ -434,49 +441,47 @@ function tablePayroll(){
                 searchPayroll($search, $filter);
             }else{
                 echo '<div class="table-responsive text-center" style="width: 1063px;">
-                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
+                <table class="table table-sm table-striped table-success table-hover table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">NAME</th>
-                            <th scope="col">DATE</th>
                             <th scope="col">JOB</th>
+                            <th scope="col">RATE</th>
                             <th scope="col">NO. OF DAYS</th>
                             <th scope="col">LATE</th>
-                            <th scope="col">RATE</th>
                             <th scope="col">SALARY</th>
                             <th scope="col">RATE PER HOUR</th>
                             <th scope="col">NO. OF HOURS</th>
                             <th scope="col">OVERTIME PAY</th>
                             <th scope="col">HOLIDAY</th>
-                            <th scope="col">ALLOWANCES</th>
                             <th scope="col">PHILHEALTH</th>
                             <th scope="col">SSS</th>
                             <th scope="col">ADVANCE</th>
                             <th scope="col">AMOUNT</th>
+                            <th scope="col">EDIT</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider text-center">
                         <tr>';
                 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr>';
-                    echo '<td>'.$result['uid'].'</td>';
+                    echo '<td>'.$result['id'].'</td>';
                     echo '<td>'.$result['name'].'</td>';
-                    echo '<td>'.$result['date'].'</td>';
                     echo '<td>'.$result['job'].'</td>';
+                    echo '<td class="text-decoration-underline">'.$result['rate'].'</td>';
                     echo '<td>'.$result['days'].'</td>';
                     echo '<td>'.$result['late'].'</td>';
-                    echo '<td>'.$result['rate'].'</td>';
                     echo '<td>'.$result['salary'].'</td>';
                     echo '<td>'.$result['rph'].'</td>';
-                    echo '<td>'.$result['hours'].'</td>';
-                    echo '<td>'.$result['otPay'].'</td>';
-                    echo '<td>'.$result['holiday'].'</td>';
-                    echo '<td>'.$result['allowances'].'</td>';
-                    echo '<td>'.$result['philHealth'].'</td>';
-                    echo '<td>'.$result['sss'].'</td>';
-                    echo '<td>'.$result['advance'].'</td>';
-                    echo '<td>'.$result['amount'].'</td>';
+                    echo '<td>'.$result['hrs'].'</td>';
+                    echo '<td>'.$result['ot'].'</td>';
+                    echo '<td class="text-decoration-underline">'.$result['holiday'].'</td>';
+                    echo '<td class="text-decoration-underline">'.$result['philhealth'].'</td>';
+                    echo '<td class="text-decoration-underline">'.$result['sss'].'</td>';
+                    echo '<td class="text-decoration-underline">'.$result['advance'].'</td>';
+                    echo '<td>'.$result['total'].'</td>';
+                    echo '<td><button class="btn fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#payroll1" onclick="getRowId(`'.$result['id'].'`)"></button></td>';
                     echo '</tr>';
                 }
                 echo '</tr>
@@ -496,25 +501,6 @@ function totalSalary(){
         $total = 0;
         while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
             $total = $total + $result['amount'];
-        }
-        echo '<div class="alert alert-info my-auto" role="alert">
-                    <h1 class="text-black text-center my-auto">₱ '.$total.'</h1>
-                </div>';
-    }else{
-        echo '<div class="alert alert-danger my-auto" role="alert">
-                Error.
-                </div>';
-    }
-}
-function allowance(){
-    require (__DIR__ . '/database.php');
-    $username = $_SESSION['user_id'];
-    $stmt=$conn->prepare('SELECT allowances FROM payroll WHERE uid = :id');
-    $stmt->bindParam(':id', $username, PDO::PARAM_STR);
-    if($stmt->execute()){
-        $total = 0;
-        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $total = $total + $result['allowances'];
         }
         echo '<div class="alert alert-info my-auto" role="alert">
                     <h1 class="text-black text-center my-auto">₱ '.$total.'</h1>
@@ -591,9 +577,9 @@ function reportEmp(){
     }
 }
 
-function recordTable(){
+function logTable(){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM record');
+    $stmt = $conn->prepare('SELECT * FROM log ORDER BY updateTime DESC');
     if($stmt->execute()){
         $result = $stmt->rowCount();
         if($result == 0){
@@ -602,33 +588,37 @@ function recordTable(){
         </div>';
         }else{
             echo '<div class="table-responsive text-center">
-            <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">NAME</th>
-                        <th scope="col">DATE-IN</th>
-                        <th scope="col">TIME-IN</th>
-                        <th scope="col">DATE-OUT</th>
-                        <th scope="col">TIME-OUT</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider text-center">
-                    <tr>';
-            while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-                echo '<tr>';
-                echo '<td>'.$result['uid'].'</td>';
-                echo '<td>'.$result['name'].'</td>';
-                echo '<td>'.$result['dateIn'].'</td>';
-                echo '<td>'.$result['timeIn'].'</td>';
-                echo '<td>'.$result['dateOut'].'</td>';
-                echo '<td>'.$result['timeOut'].'</td>';
-                echo '</tr>';
-            }
-            echo '</tr>
-            </tbody>
-        </table>
-    </div>';
+                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">JOB</th>
+                            <th scope="col">TIMED-IN (DATE)</th>
+                            <th scope="col">TIMED-IN (TIME)</th>
+                            <th scope="col">TIMED-OUT (DATE)</th>
+                            <th scope="col">TIMED-OUT (TIME)</th>
+                            <th scope="col">LOCATION</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider text-center">
+                        <tr>';
+                while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    echo '<tr>';
+                    echo '<td>'.$result['id'].'</td>';
+                    echo '<td>'.$result['name'].'</td>';
+                    echo '<td>'.$result['job'].'</td>';
+                    echo '<td>'.$result['dateIn'].'</td>';
+                    echo '<td>'.$result['timeIn'].'</td>';
+                    echo '<td>'.$result['dateOut'].'</td>';
+                    echo '<td>'.$result['timeOut'].'</td>';
+                    echo '<td>'.$result['location'].'</td>';
+                    echo '</tr>';
+                }
+                echo '</tr>
+                </tbody>
+            </table>
+        </div>';
         }
     }
 }
@@ -740,7 +730,7 @@ function deductions(){
 }
 function dashboard(){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM payroll');
+    $stmt = $conn->prepare('SELECT * FROM dashboard');
     if($stmt->execute()){
         $result = $stmt->rowCount();
         if($result == 0){
@@ -755,7 +745,7 @@ function dashboard(){
                 unset($_SESSION['filter']);
                 searchPayroll($search, $filter);
             }else{
-                echo '<div class="table-responsive text-center" style="width: 1063px;">
+                echo '<div class="table-responsive text-center">
                 <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
                     <thead>
                         <tr>
@@ -765,7 +755,7 @@ function dashboard(){
                             <th scope="col">LAST TIMED-IN (DATE)</th>
                             <th scope="col">LAST TIMED-IN (TIME)</th>
                             <th scope="col">LAST TIMED-OUT (DATE)</th>
-                            <th scope="col">LAST TIMED-OUT (DATE)</th>
+                            <th scope="col">LAST TIMED-OUT (TIME)</th>
                             <th scope="col">STATUS</th>
                         </tr>
                     </thead>
@@ -773,7 +763,14 @@ function dashboard(){
                         <tr>';
                 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr>';
-                    echo '<td>'.$result['uid'].'</td>';
+                    echo '<td>'.$result['id'].'</td>';
+                    echo '<td>'.$result['name'].'</td>';
+                    echo '<td>'.$result['job'].'</td>';
+                    echo '<td>'.$result['dateIn'].'</td>';
+                    echo '<td>'.$result['timeIn'].'</td>';
+                    echo '<td>'.$result['dateOut'].'</td>';
+                    echo '<td>'.$result['timeOut'].'</td>';
+                    echo '<td>'.$result['status'].'</td>';
                     echo '</tr>';
                 }
                 echo '</tr>
@@ -781,6 +778,37 @@ function dashboard(){
             </table>
         </div>';
             }
+        }
+    }
+}
+
+/*function status(){
+    require (__DIR__ . '/database.php');
+    $inactive = strtotime('-30 days');
+    $stmt=$conn->prepare('SELECT * FROM dashboard');
+    if($stmt->execute()){
+        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $date = strtotime($result['dateOut']);
+            if($date > $inactive && $date != '0000-00-00'){
+                $id = $result['id'];
+                $stmt = $conn->prepare('UPDATE dashboard SET status = "INACTIVE" WHERE id = :id');
+                $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+                $stmt->execute();
+            }
+        }
+    }
+}*/
+function compute(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT id, rate, holiday, philhealth, sss, advance FROM payroll');
+    if($stmt->execute()){
+        while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $id = $result['id'];
+            $rate = $result['rate'];
+            $holiday = $result['holiday'];
+            $philhealth = $result['philhealth'];
+            $sss = $result['sss'];
+            $advance = $result['advance'];
         }
     }
 }

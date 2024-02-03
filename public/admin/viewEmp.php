@@ -34,7 +34,7 @@ include ('../../includes/admin/header.php');
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
-                                            <button type="submit" class="btn btn-primary" name="select">SELECT</button>
+                                            <button type="submit" class="btn btn-success" name="select">SELECT</button>
                                         </div>
                                     </form>
                                 </div>
@@ -86,6 +86,24 @@ include ('../../includes/admin/header.php');
                         employee.classList.remove('text-black');
                         employee.className += " bg-success text-white active";
                     });
+                    function qr(id) {
+                        var qrId = id;
+                        fetch('../../private/qrcode_generator.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: qrId
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                        
+                    }
                     </script>
 <?php
 include ('../../includes/admin/footer.php');

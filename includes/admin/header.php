@@ -44,9 +44,6 @@ checkAuthentication();
                                 <a class="nav-link text-center text-black" id="payroll" href="payroll.php">PAYROLL</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="report" href="report.php">REPORT</a>
-                            </li>
-                            <li class="nav-item mt-3">
                                 <a class="nav-link text-center text-black" id="about" href="about.php">ABOUT</a>
                             </li>
                             <li class="nav-item mt-3">

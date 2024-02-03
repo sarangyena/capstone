@@ -5,10 +5,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
     $username = $data['user'];
-    $location = $$data['latitude'].', '.$$data['longitude'];
+    $location = $data['latitude'].', '.$data['longitude'];
     $logOut = 0;
     $logIn = 1;
     $status = 'ACTIVE';
+    $time = date('h:i A');
+    $date = date('Y-m-d');
+    $unix = time();
 
     $stmt = $conn->prepare('SELECT last, first, middle, job FROM employee WHERE id = :id');
     $stmt->bindParam(':id', $username, PDO::PARAM_STR);
@@ -36,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->bindParam(':time', $time, PDO::PARAM_STR);
                 $stmt->bindParam(':location', $location, PDO::PARAM_STR);
                 $stmt->bindParam(':log', $logIn, PDO::PARAM_BOOL);
-                $stmt->bindParam(':update', $time, PDO::PARAM_STR);
+                $stmt->bindParam(':update', $unix, PDO::PARAM_STR);
                 if($stmt->execute()){
                     $stmt = $conn->prepare('UPDATE dashboard SET dateIn = :date, timeIn = :time, status = :status WHERE id = :id');
                     $stmt->bindParam(':id', $username, PDO::PARAM_STR);
@@ -58,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->bindParam(':time', $time, PDO::PARAM_STR);
                 $stmt->bindParam(':log', $logOut, PDO::PARAM_BOOL);
                 $stmt->bindParam(':logIn', $logIn, PDO::PARAM_BOOL);
-                $stmt->bindParam(':update', $time, PDO::PARAM_STR);
+                $stmt->bindParam(':update', $unix, PDO::PARAM_STR);
                 if($stmt->execute()){
                     $stmt = $conn->prepare('UPDATE dashboard SET dateOut = :date, timeOut = :time, status = :status WHERE id = :id');
                     $stmt->bindParam(':id', $username, PDO::PARAM_STR);

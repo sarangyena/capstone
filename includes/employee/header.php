@@ -41,10 +41,7 @@ checkAuthentication();
                                 <a class="nav-link text-center text-black" id="homepage" href="homepage.php">HOMEPAGE</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="record" href="record.php">RECORD</a>
-                            </li>
-                            <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="report" href="report.php">SALARY REPORT</a>
+                                <a class="nav-link text-center text-black" id="report" href="report.php">PAYROLL REPORT</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-center text-black" id="about" href="about.php">ABOUT</a>

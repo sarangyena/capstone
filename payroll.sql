@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 03, 2024 at 02:57 PM
+-- Generation Time: Feb 04, 2024 at 12:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -75,8 +75,8 @@ INSERT INTO `dashboard` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `ti
 ('O-006', 'FLORENDO, EDRIA A.', 'GENERAL MANAGER', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 'ACTIVE'),
 ('E-001', 'FLORENDO, EDRIA S.', 'FARMER', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 'NEW'),
 ('E-002', 'FLORENDO, EDRIA S.', 'SECRETARY', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 'NEW'),
-('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-03', '04:45 PM', '2024-02-03', '04:42 PM', 'ACTIVE'),
-('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-03', '04:41 PM', '2024-02-03', '04:43 PM', 'ACTIVE'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:52 AM', 'ACTIVE'),
+('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:53 AM', 'ACTIVE'),
 ('E-005', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
 ('E-006', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
 ('E-007', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
@@ -169,8 +169,19 @@ CREATE TABLE `log` (
   `timeOut` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
   `log` tinyint(1) NOT NULL,
-  `updateTime` time NOT NULL
+  `updateTime` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `log`
+--
+
+INSERT INTO `log` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `timeOut`, `location`, `log`, `updateTime`) VALUES
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:51 AM', '2024-02-04', '06:51 AM', '14.8443, 120.810204', 0, '1707000707'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:51 AM', '2024-02-04', '06:51 AM', '14.8443, 120.810204', 0, '1707000716'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:52 AM', '14.8443, 120.810204', 0, '1707000766'),
+('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:53 AM', '14.8443, 120.810204', 0, '1707000784'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '', '', '14.8443, 120.810204', 1, '1707000778');
 
 -- --------------------------------------------------------
 

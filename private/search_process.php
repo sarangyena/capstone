@@ -20,7 +20,14 @@ if(isset($_POST['empBar']) && (isset($_POST['empFilter']))){
     $filter = $_POST['payrollFilter'];
     $_SESSION['payrollBar'] = $search;
     $_SESSION['payrollFilter'] = $filter;
-    echo header('Location: ../public/admin/report.php');
+    echo header('Location: ../public/admin/payroll.php');
+    exit();
+}else if(isset($_POST['homepageBar']) && (isset($_POST['homepageFilter']))){
+    $search = $_POST['homepageBar'];
+    $filter = $_POST['homepageFilter'];
+    $_SESSION['homepageBar'] = $search;
+    $_SESSION['homepageFilter'] = $filter;
+    echo header('Location: ../public/admin/homepage.php');
     exit();
 }else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Access the sent data using $_POST superglobal

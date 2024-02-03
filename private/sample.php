@@ -1,5 +1,6 @@
 <?php
-$time = time();
+session_start();
 
-echo $time; 
+$time = time();
+echo $time;
 ?>

@@ -5,7 +5,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
     $username = $data['user'];
-    $location = $data['latitude'].', '.$data['longitude'];
+    if($data['latitude'] = '14.8443' && $data['longitude'] = '120.810204'){
+        $location = "Al Dawah Producers Cooperative";
+    }else{
+        $location = "Other Location";
+    }
     $logOut = 0;
     $logIn = 1;
     $status = 'ACTIVE';

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 04, 2024 at 12:27 AM
+-- Generation Time: Feb 04, 2024 at 01:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -75,8 +75,8 @@ INSERT INTO `dashboard` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `ti
 ('O-006', 'FLORENDO, EDRIA A.', 'GENERAL MANAGER', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 'ACTIVE'),
 ('E-001', 'FLORENDO, EDRIA S.', 'FARMER', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 'NEW'),
 ('E-002', 'FLORENDO, EDRIA S.', 'SECRETARY', '0000-00-00', '00:00:00', '0000-00-00', '00:00:00', 'NEW'),
-('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:52 AM', 'ACTIVE'),
-('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:53 AM', 'ACTIVE'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '08:01 PM', '2024-02-04', '08:01 PM', 'ACTIVE'),
+('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '07:56 PM', '2024-02-04', '07:56 PM', 'ACTIVE'),
 ('E-005', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
 ('E-006', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
 ('E-007', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
@@ -87,7 +87,8 @@ INSERT INTO `dashboard` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `ti
 ('E-012', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
 ('E-013', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
 ('E-014', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
-('E-015', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW');
+('E-015', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW'),
+('E-016', 'FLORENDO, EDRIA S.', 'FARMER', '', '', '', '', 'NEW');
 
 -- --------------------------------------------------------
 
@@ -137,7 +138,8 @@ INSERT INTO `employee` (`id`, `last`, `first`, `middle`, `status`, `email`, `pho
 ('E-012', 'FLORENDO', 'EDRIA', 'SADSD', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '639062603486', 'FARMER', '3123123', '31232', '321321', '53413', 'EDASD', 'ADADA', '2123123', 'DADASDA', '2024-02-03 18:33:59', '$2y$10$56vlbcVM5h0H3nzny8.Gzu2cR71NYn5VfDPjiamPnCR5YxX8NamjO', ''),
 ('E-013', 'FLORENDO', 'EDRIA', 'SADSD', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '639062603486', 'FARMER', '3123123', '31232', '321321', '53413', 'EDASD', 'ADADA', '2123123', 'DADASDA', '2024-02-03 18:35:17', '$2y$10$CKcpnY5V.jgiPS6YelFwqemVm03RllAuAWVsmUY4J1cv/JglNaiia', ''),
 ('E-014', 'FLORENDO', 'EDRIA', 'SADSD', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '639062603486', 'FARMER', '3123123', '31232', '321321', '53413', 'EDASD', 'ADADA', '2123123', 'DADASDA', '2024-02-03 18:42:51', '$2y$10$0G0XWdXor8.OKgFel5KgJugKGfZsAlFnGzdQ79SYG3kRCVMQ4i7ra', ''),
-('E-015', 'FLORENDO', 'EDRIA', 'SADSD', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '639062603486', 'FARMER', '3123123', '31232', '321321', '53413', 'EDASD', 'ADADA', '2123123', 'DADASDA', '2024-02-03 18:55:23', '$2y$10$YGqGv7PLAsqUL4O1wLYclOcuYw7FS5qHCiJbeP/sz.rlyXtYXX/hK', '');
+('E-015', 'FLORENDO', 'EDRIA', 'SADSD', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '639062603486', 'FARMER', '3123123', '31232', '321321', '53413', 'EDASD', 'ADADA', '2123123', 'DADASDA', '2024-02-03 18:55:23', '$2y$10$YGqGv7PLAsqUL4O1wLYclOcuYw7FS5qHCiJbeP/sz.rlyXtYXX/hK', ''),
+('E-016', 'FLORENDO', 'EDRIA', 'SADSD', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '639062603486', 'FARMER', '3123123', '31232', '321321', '53413', 'EDASD', 'ADADA', '2123123', 'DADASDA', '2024-02-04 19:43:15', '$2y$10$bJRaOlYCOy2f8nD7LPf2JeOXEBZJToUY0OzkrMAmHmJKOLUi1mu3.', '');
 
 -- --------------------------------------------------------
 
@@ -152,6 +154,13 @@ CREATE TABLE `image` (
   `type` varchar(255) NOT NULL,
   `path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `image`
+--
+
+INSERT INTO `image` (`uid`, `name`, `size`, `type`, `path`) VALUES
+('E-016', 'E-016.png', '1666', 'image/png', '../private/images/employee/E-016.png');
 
 -- --------------------------------------------------------
 
@@ -181,7 +190,15 @@ INSERT INTO `log` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `timeOut`
 ('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:51 AM', '2024-02-04', '06:51 AM', '14.8443, 120.810204', 0, '1707000716'),
 ('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:52 AM', '14.8443, 120.810204', 0, '1707000766'),
 ('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '06:53 AM', '14.8443, 120.810204', 0, '1707000784'),
-('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '', '', '14.8443, 120.810204', 1, '1707000778');
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '06:52 AM', '2024-02-04', '07:59 PM', '14.8443, 120.810204', 0, '1707047960'),
+('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '07:49 PM', '2024-02-04', '07:50 PM', 'Other location', 0, '1707047425'),
+('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '07:52 PM', '2024-02-04', '07:53 PM', 'Other location', 0, '1707047581'),
+('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '07:55 PM', '2024-02-04', '07:56 PM', 'Other location', 0, '1707047763'),
+('E-004', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '07:56 PM', '', '', 'other', 1, '1707047774'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '07:59 PM', '2024-02-04', '08:00 PM', 'other', 0, '1707048001'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '08:00 PM', '2024-02-04', '08:00 PM', 'other', 0, '1707048025'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '08:00 PM', '2024-02-04', '08:01 PM', 'ALDAWAH', 0, '1707048086'),
+('E-003', 'FLORENDO, EDRIA S.', 'GENERAL MANAGER', '2024-02-04', '08:01 PM', '', '', 'Al Dawah Producers Cooperative', 1, '1707048091');
 
 -- --------------------------------------------------------
 
@@ -265,7 +282,8 @@ INSERT INTO `payroll` (`id`, `name`, `job`, `rate`, `days`, `late`, `salary`, `r
 ('E-012', 'FLORENDO, EDRIA S.', 'FARMER', 53413, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('E-013', 'FLORENDO, EDRIA S.', 'FARMER', 53413, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('E-014', 'FLORENDO, EDRIA S.', 'FARMER', 53413, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-('E-015', 'FLORENDO, EDRIA S.', 'FARMER', 53413, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+('E-015', 'FLORENDO, EDRIA S.', 'FARMER', 53413, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('E-016', 'FLORENDO, EDRIA S.', 'FARMER', 53413, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 

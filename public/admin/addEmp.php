@@ -30,16 +30,19 @@ include ('../../includes/admin/header.php');
                         </div>
                         <ul class="nav nav-pills justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link active bg-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
+                                <a class="nav-link active bg-warning me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active bg-secondary mx-2" href="viewOnCall.php"><button type="button" class="btn btn-sm">ON-CALL DETAILS</button></a>
+                                <a class="nav-link active bg-secondary me-2" href="addOnCall.php"><button type="button" class="btn btn-sm">ADD ON-CALL</button></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active bg-secondary" href="viewEmp.php"><button type="button" class="btn btn-sm">EMPLOYEE DETAILS</button></a>
+                                <a class="nav-link active bg-secondary" href="viewOnCall.php"><button type="button" class="btn btn-sm">ON-CALL DETAILS</button></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active bg-secondary ms-2" href="viewEmp.php"><button type="button" class="btn btn-sm">EMPLOYEE DETAILS</button></a>
                             </li>
                         </ul>
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <!--<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -64,7 +67,7 @@ include ('../../includes/admin/header.php');
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                     <div class="container-fluid p-3">
                         <h1 class="text-white border-bottom d-inline-block">ADD EMPLOYEE</h1>

@@ -1,5 +1,6 @@
 <?php
 include ('../../includes/admin/header.php');
+compute();
 ?>
                     
                     <div class="container-fluid text-white p-3">
@@ -33,7 +34,7 @@ include ('../../includes/admin/header.php');
                             <button type="submit" class="btn btn-warning" name="search" tabindex="3">SEARCH</button>
                             <button type="button" class="btn btn-warning ms-2" name="reload" tabindex="4" onclick="reloadPage()"><i class="fa-solid fa-rotate-right"></i></button>
                         </form>
-                        <div class="modal fade" id="payroll1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal fade" id="payroll1" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -65,7 +66,7 @@ include ('../../includes/admin/header.php');
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
-                                            <button type="submit" class="btn btn-success" name="editPayroll">SELECT</button>
+                                            <button type="submit" class="btn btn-success" name="editPayroll">UPDATE</button>
                                         </div>
                                     </form>
                                 </div>

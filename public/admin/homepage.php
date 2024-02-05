@@ -1,5 +1,6 @@
 <?php
 include ('../../includes/admin/header.php');
+status();
 ?>
                     <div class="container-fluid text-white p-3">
                         <h1 class="border-bottom text-center py-2">HOMEPAGE</h1>

@@ -38,7 +38,7 @@ checkAuthentication();
                                 <a class="nav-link text-center text-black" id="homepage" href="homepage.php">HOMEPAGE</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="employee" href="addEmp.php" data-bs-toggle="modal" data-bs-target="#staticBackdrop">EMPLOYEE</a>
+                                <a class="nav-link text-center text-black" id="employee" href="addEmp.php">EMPLOYEE</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-center text-black" id="payroll" href="payroll.php">PAYROLL</a>
@@ -58,7 +58,7 @@ checkAuthentication();
                         </ul>
                     </div>
                 </div>
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <!--<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -82,5 +82,5 @@ checkAuthentication();
                             </form>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="col">

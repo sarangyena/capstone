@@ -24,7 +24,7 @@ include ('../../includes/admin/header.php');
                                 </div>
                                 <div class="col-sm d-flex flex-column">
                                     <h2 class="text-white mt-auto">UPLOAD ADMIN IMAGE:</h2>
-                                    <input type="file" name="image" id="image" onchange="previewImage(event)" class="form-control mb-auto" accept=".jpg, .jpeg, .png" required>
+                                    <input type="file" name="image" id="image" onchange="previewImage(event)" class="form-control mb-auto" accept=".jpg, .jpeg, .png" tabindex="1" required>
                                     <?php
                                     if(isset($_SESSION['error1'])){
                                         echo '<div class="alert alert-danger mt-2" role="alert">
@@ -49,23 +49,11 @@ include ('../../includes/admin/header.php');
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">LAST NAME</span>
-                                        <input type="text" class="form-control" name="add2" oninput="letters(this)" tabindex="1" required>
-                                    </div>
-                                    <div class="input-group mt-2">
-                                        <span class="input-group-text">SUFFIX</span>
-                                        <input type="text" class="form-control" name="add5" oninput="letters(this)" tabindex="4">
-                                    </div>
-                                    <div class="input-group mt-2">
-                                        <label class="input-group-text" for="gender">GENDER</label>
-                                        <select class="form-select" name="add8" tabindex="7" required>
-                                            <option value="" disabled selected></option>
-                                            <option value="MALE">MALE</option>
-                                            <option value="FEMALE">FEMALE</option>
-                                        </select>
+                                        <input type="text" class="form-control" name="add1" oninput="letters(this)" tabindex="2" required>
                                     </div>
                                     <div class="input-group mt-2">
                                         <label class="input-group-text" for="status">CIVIL STATUS</label>
-                                        <select class="form-select" name="add11" tabindex="10" required>
+                                        <select class="form-select" name="add4" tabindex="5" required>
                                             <option value="" disabled selected></option>
                                             <option value="SINGLE">SINGLE</option>
                                             <option value="MARRIED">MARRIED</option>
@@ -74,50 +62,56 @@ include ('../../includes/admin/header.php');
                                     </div>
                                     <div class="input-group mt-2">
                                         <label class="input-group-text" for="job">DESIGNATION</label>
-                                        <select class="form-select" name="add14" tabindex="13" required>
+                                        <select class="form-select" name="add7" tabindex="8" required>
                                             <option value="" disabled selected></option>
+                                            <option value="AREA MANAGER">AREA MANAGER</option>
+                                            <option value="BOOK KEEPER">BOOK KEEPER</option>
+                                            <option value="CASHIER">CASHIER</option>
                                             <option value="FARMER">FARMER</option>
+                                            <option value="FARM MANAGER">FARM MANAGER</option>
+                                            <option value="GENERAL MANAGER">GENERAL MANAGER</option>
+                                            <option value="HR">HR</option>
+                                            <option value="PAYROLL ASSISTANT">PAYROLL ASSISTANT</option>
+                                            <option value="SECRETARY">SECRETARY</option>
+                                            <option value="SUPERVISOR">SUPERVISOR</option>
+                                            <option value="TECH SUPPORT">TECH SUPPORT</option>
                                         </select>
+                                    </div>
+                                    <div class="input-group mt-2">
+                                        <span class="input-group-text">PAG-IBIG NUMBER</span>
+                                        <input type="text" class="form-control" name="add10" tabindex="11">
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">FIRST NAME</span>
-                                        <input type="text" class="form-control" name="add3" oninput="letters(this)" tabindex="2" required>
-                                    </div>
-                                    <div class="input-group mt-2">
-                                        <span class="input-group-text">BIRTHDAY</span>
-                                        <input type="date" class="form-control" name="add6" tabindex="5" required>
+                                        <input type="text" class="form-control" name="add2" oninput="letters(this)" tabindex="3" required>
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">EMAIL</span>
-                                        <input type="email" class="form-control" name="add9" oninput="up(this)" tabindex="8" required>
+                                        <input type="email" class="form-control" name="add5" oninput="up(this)" tabindex="6">
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">SSS NUMBER</span>
-                                        <input type="text" class="form-control" name="add12" oninput="num(this)" tabindex="11" required>
+                                        <input type="text" class="form-control" name="add8" oninput="num(this)" tabindex="9">
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">RATE</span>
-                                        <input type="number" class="form-control" name="add15" tabindex="14" required>
+                                        <input type="number" class="form-control" name="add11" tabindex="12" required>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">MIDDLE NAME</span>
-                                        <input type="text" class="form-control" name="add4" oninput="letters(this)" tabindex="3" required>
-                                    </div>
-                                    <div class="input-group mt-2">
-                                        <span class="input-group-text">AGE</span>
-                                        <input type="number" class="form-control" name="add7" tabindex="6" required>
+                                        <input type="text" class="form-control" name="add3" oninput="letters(this)" tabindex="4">
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">PHONE NUMBER</span>
-                                        <input type="text" class="form-control" name="add10" oninput="num(this)" tabindex="9" required>
+                                        <input type="text" class="form-control" name="add6" oninput="num(this)" tabindex="7">
                                     </div>
                                     <div class="input-group mt-2">
                                         <span class="input-group-text">PHILHEALTH NUMBER</span>
-                                        <input type="text" class="form-control" name="add13" oninput="num(this)" tabindex="12" required>
+                                        <input type="text" class="form-control" name="add9" oninput="num(this)" tabindex="10">
                                     </div>
                                 </div>
                             </div>
@@ -126,7 +120,7 @@ include ('../../includes/admin/header.php');
                                     <h4 class="text-white border-bottom">ADDRESS</h4>
                                     <div class="input-group">
                                         <span class="input-group-text">ADDRESS</span>
-                                        <input type="text" class="form-control" name="add16" oninput="up(this)" tabindex="15" required>
+                                        <input type="text" class="form-control" name="add12" oninput="up(this)" tabindex="13" required>
                                     </div>
                                 </div>
                             </div>
@@ -135,24 +129,24 @@ include ('../../includes/admin/header.php');
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">FULL NAME</span>
-                                        <input type="text" class="form-control" name="add17" oninput="letters(this)" tabindex="16" required>
+                                        <input type="text" class="form-control" name="add13" oninput="letters(this)" tabindex="14">
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <div class="input-group">
                                         <span class="input-group-text">PHONE NUMBER</span>
-                                        <input type="text" class="form-control" name="add18" oninput="num(this)" tabindex="17" required>
+                                        <input type="text" class="form-control" name="add14" oninput="num(this)" tabindex="15">
                                     </div>
                                 </div>
                             </div>
                             <div class="input-group mt-2">
                                 <span class="input-group-text">ADDRESS</span>
-                                <input type="text" class="form-control" name="add19" oninput="up(this)" tabindex="18" required>
+                                <input type="text" class="form-control" name="add15" oninput="up(this)" tabindex="16">
                             </div>
                             <div>
                                 <div class="d-flex mt-3">
-                                    <button type="submit" class="btn btn-warning ms-auto" name="add" tabindex="19">ADD ADMIN</button>
-                                    <button type="button" class="btn btn-warning ms-2" onclick="clearForm()" tabindex="20">CLEAR</button>
+                                    <button type="submit" class="btn btn-warning ms-auto" name="add" tabindex="17">ADD EMPLOYEE</button>
+                                    <button type="button" class="btn btn-warning ms-2" onclick="clearForm()" tabindex="18">CLEAR</button>
                                 </div>
                             </div>
                         </form>

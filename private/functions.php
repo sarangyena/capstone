@@ -762,25 +762,31 @@ function dashboard(){
     }
 }
 
-/*function status(){
+function status(){
     require (__DIR__ . '/database.php');
-    $inactive = strtotime('-30 days');
-    $stmt=$conn->prepare('SELECT * FROM dashboard');
-    if($stmt->execute()){
-        while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-            $date = strtotime($result['dateOut']);
-            if($date > $inactive && $date != '0000-00-00'){
-                $id = $result['id'];
-                $stmt = $conn->prepare('UPDATE dashboard SET status = "INACTIVE" WHERE id = :id');
-                $stmt->bindParam(':id', $id, PDO::PARAM_STR);
-                $stmt->execute();
-            }
+    $stmt = $conn->prepare('SELECT * FROM dashboard');
+    $stmt->execute();
+    while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+        $id = $result['id'];
+        $dateOut = $result['dateOut'];
+        $date = new DateTime($dateOut);
+        $current = new DateTime();
+        $interval = $current->diff($date);
+        $days = $interval->days;
+        if ($days > 30) {
+            $stmt = $conn->prepare('UPDATE dashboard SET status = "INACTIVE" WHERE id = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+        }else{
+            $stmt = $conn->prepare('UPDATE dashboard SET status = "ACTIVE" WHERE id = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
         }
     }
-}*/
+}
 function compute(){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT id, rate, holiday, philhealth, sss, advance FROM payroll');
+    $stmt = $conn->prepare('SELECT * FROM payroll');
     if($stmt->execute()){
         while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
             $id = $result['id'];
@@ -788,7 +794,24 @@ function compute(){
             $holiday = $result['holiday'];
             $philhealth = $result['philhealth'];
             $sss = $result['sss'];
-            $advance = $result['advance'];
+            $advance = $result['advance'];  
+            $days = $result['days'];
+            $late = $result['late'];
+            $ot = $result['ot'];
+            
+            $salary = $rate*$days+$rate/8*$late;
+            $rph = $rate/8+$rate/8*0.20;
+            $otPay = $rph*$ot;
+            $total = $salary+$otPay+$holiday-$philhealth-$sss-$advance;
+            
+            $stmtUpdate = $conn->prepare('UPDATE payroll SET salary = :salary, rph = :rph, ot = :ot, total = :total WHERE id = :id');
+            $stmtUpdate->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmtUpdate->bindParam(':salary', $salary, PDO::PARAM_STR);
+            $stmtUpdate->bindParam(':rph', $rph, PDO::PARAM_STR);
+            $stmtUpdate->bindParam(':ot', $otPay, PDO::PARAM_STR);
+            $stmtUpdate->bindParam(':total', $total, PDO::PARAM_STR);
+            $stmtUpdate->execute();
+            
         }
     }
 }
@@ -956,6 +979,70 @@ function payrollEmp($username1){
             }
         }
     }
-
+}
+function days($id){
+    require (__DIR__ . '/database.php');
+    $date = date("Y-m-d");
+    $previousDate = date("Y-m-d", strtotime($date . " -1 day"));
+    $hours = 0;
+    $stmt = $conn->prepare('SELECT * FROM log WHERE id = :id AND dateIn = :date AND dateOut = :date LIMIT 2');
+    $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $stmt->bindParam(':date', $previousDate, PDO::PARAM_STR);
+    if($stmt->execute()){
+        $rowCount = $stmt->rowCount();
+        while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $timeIn = strtotime($result['timeIn']);
+            $timeOut = strtotime($result['timeOut']);
+            $totalTime = abs($timeOut - $timeIn);
+            $totalTime /= 3600;
+            $hours += $totalTime;
+        }
+        $stmtDays = $conn->prepare('SELECT days FROM payroll WHERE id = :id');
+        $stmtDays->bindParam(':id', $id, PDO::PARAM_STR);
+        $stmtDays->execute();
+        $days = $stmtDays->fetch(PDO::FETCH_ASSOC);
+        $days = $days['days'];
+        if($hours >= 8){
+            $days += 1;
+            $stmt = $conn->prepare('UPDATE payroll SET days = :days WHERE id = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':days', $days, PDO::PARAM_STR);
+            $stmt->execute();
+        }else if($rowCount == 1 && $hours > 4 && $hours < 8){
+            $days += 0.5;
+            $stmt = $conn->prepare('UPDATE payroll SET days = :days WHERE id = :id');
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->bindParam(':days', $days, PDO::PARAM_STR);
+            $stmt->execute();
+        }
+        
+    }
+}
+function late($id){
+    require (__DIR__ . '/database.php');
+    $date = date("Y-m-d");
+    $previousDate = date("Y-m-d", strtotime($date . " -1 day"));
+    $timeLimit = "08:15:00";
+    $limit = new DateTime(date('Y-m-d') . ' ' . $timeLimit);
+    $penalty = 30;
+    
+    $stmt = $conn->prepare('SELECT * FROM log WHERE id = :id AND dateIn = :date AND dateOut = :date LIMIT 2');
+    $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $stmt->bindParam(':date', $previousDate, PDO::PARAM_STR);
+    if($stmt->execute()){
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $check = new DateTime($date . ' ' . $result['timeIn']);
+        if ($check > $limit) {
+            $interval = $check->diff($limit);
+            $penalty += $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
+            $penalty /= 60;
+            $penalty = number_format($penalty, 2);
+            
+            $stmtUpdate = $conn->prepare('UPDATE payroll SET late = :late WHERE id = :id');
+            $stmtUpdate->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmtUpdate->bindParam(':late', $penalty, PDO::PARAM_STR);
+            $stmtUpdate->execute();        
+        }
+    }
 }
 ?>

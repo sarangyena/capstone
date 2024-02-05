@@ -5,16 +5,19 @@ include ('../../includes/admin/header.php');
                     <div class="container-fluid p-3">
                         <ul class="nav nav-pills justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link active bg-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
+                                <a class="nav-link active bg-secondary me-2" href="addEmp.php"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active bg-secondary mx-2" href="viewOnCall.php"><button type="button" class="btn btn-sm">ON-CALL DETAILS</button></a>
+                                <a class="nav-link active bg-warning me-2" href="addOnCall.php"><button type="button" class="btn btn-sm">ADD ON-CALL</button></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active bg-secondary" href="viewEmp.php"><button type="button" class="btn btn-sm">EMPLOYEE DETAILS</button></a>
+                                <a class="nav-link active bg-secondary" href="viewOnCall.php"><button type="button" class="btn btn-sm">ON-CALL DETAILS</button></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active bg-secondary ms-2" href="viewEmp.php"><button type="button" class="btn btn-sm">EMPLOYEE DETAILS</button></a>
                             </li>
                         </ul>
-                        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <!--<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -39,7 +42,7 @@ include ('../../includes/admin/header.php');
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="container-fluid p-3">
                         <h1 class="text-white border-bottom d-inline-block">ADD ON-CALL</h1>
@@ -63,7 +66,7 @@ include ('../../includes/admin/header.php');
                                     <img src="../../private/images/user.png" class="img-fluid mx-auto" id="preview" style="max-height: 200px;">
                                 </div>
                                 <div class="col-sm d-flex flex-column">
-                                    <h2 class="text-white mt-auto">UPLOAD EMPLOYEE IMAGE:</h2>
+                                    <h2 class="text-white mt-auto">UPLOAD ON-CALL IMAGE:</h2>
                                     <input type="file" name="image" id="image" onchange="previewImage(event)" class="form-control mb-auto" accept=".jpg, .jpeg, .png" tabindex="1" required>
                                     <?php
                                     if(isset($_SESSION['error1'])){

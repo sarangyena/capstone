@@ -5,13 +5,16 @@ include ('../../includes/admin/header.php');
                     <div class="container-fluid p-3">
                         <ul class="nav nav-pills justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link active bg-secondary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
+                                <a class="nav-link active bg-secondary me-2" href="addEmp.php"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active bg-warning mx-2" href="viewOnCall.php"><button type="button" class="btn btn-sm">ON-CALL DETAILS</button></a>
+                                <a class="nav-link active bg-secondary me-2" href="addOnCall.php"><button type="button" class="btn btn-sm">ADD ON-CALL</button></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active bg-secondary" href="viewEmp.php"><button type="button" class="btn btn-sm">EMPLOYEE DETAILS</button></a>
+                                <a class="nav-link active bg-warning" href="viewOnCall.php"><button type="button" class="btn btn-sm">ON-CALL DETAILS</button></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active bg-secondary ms-2" href="viewEmp.php"><button type="button" class="btn btn-sm">EMPLOYEE DETAILS</button></a>
                             </li>
                         </ul>
                         <div class="container-fluid">

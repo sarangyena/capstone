@@ -74,12 +74,12 @@ compute();
                         </div>
                         <?php
                         if(isset($_SESSION['success'])){
-                            echo '<div class="alert alert-success" role="alert">
+                            echo '<div class="alert alert-success mt-3" role="alert">
                                 Successfuly updated information.
                                 </div>';
                                 unset($_SESSION['success']);
                         }else if(isset($_SESSION['error'])){
-                            echo '<div class="alert alert-danger" role="alert">
+                            echo '<div class="alert alert-danger mt-3" role="alert">
                                 Error. Try again.
                                 </div>';
                                 unset($_SESSION['error']);
@@ -114,6 +114,25 @@ compute();
                             sss.value = data.sss;
                             var advance = document.getElementById('advance');
                             advance.value = data.advance;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                        
+                    }
+                    function printId(id) {
+                        fetch('../../private/print_process.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: id
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data){
+                                window.location.href = "../../private/print_process.php";
+                            }
                         })
                         .catch(error => {
                             console.error('Error:', error);

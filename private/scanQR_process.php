@@ -7,7 +7,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($jsonData, true);
     $username = $data['user'];
     days($username);
-    late($late);
+    late($username);
+    otHours($username);
     if($data['latitude'] = '14.8443' && $data['longitude'] = '120.810204'){
         $location = "AL DAWAH PRODUCERS COOPERATIVE";
     }else{

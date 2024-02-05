@@ -450,6 +450,7 @@ function tablePayroll(){
                             <th scope="col">ADVANCE</th>
                             <th scope="col">AMOUNT</th>
                             <th scope="col">EDIT</th>
+                            <th scope="col">PRINT</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider text-center">
@@ -472,6 +473,7 @@ function tablePayroll(){
                     echo '<td class="text-decoration-underline">'.$result['advance'].'</td>';
                     echo '<td>'.$result['total'].'</td>';
                     echo '<td><button class="btn fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#payroll1" onclick="getRowId(`'.$result['id'].'`)"></button></td>';
+                    echo '<td><button class="btn fa-solid fa-print" onclick="printId(`'.$result['id'].'`)"></button></td>';
                     echo '</tr>';
                 }
                 echo '</tr>
@@ -795,13 +797,14 @@ function compute(){
             $philhealth = $result['philhealth'];
             $sss = $result['sss'];
             $advance = $result['advance'];  
+            $hrs = $result['hrs'];
             $days = $result['days'];
             $late = $result['late'];
             $ot = $result['ot'];
             
             $salary = $rate*$days+$rate/8*$late;
             $rph = $rate/8+$rate/8*0.20;
-            $otPay = $rph*$ot;
+            $otPay = $rph*$hrs;
             $total = $salary+$otPay+$holiday-$philhealth-$sss-$advance;
             
             $stmtUpdate = $conn->prepare('UPDATE payroll SET salary = :salary, rph = :rph, ot = :ot, total = :total WHERE id = :id');
@@ -987,7 +990,7 @@ function days($id){
     $hours = 0;
     $stmt = $conn->prepare('SELECT * FROM log WHERE id = :id AND dateIn = :date AND dateOut = :date LIMIT 2');
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
-    $stmt->bindParam(':date', $previousDate, PDO::PARAM_STR);
+    $stmt->bindParam(':date', $date, PDO::PARAM_STR);
     if($stmt->execute()){
         $rowCount = $stmt->rowCount();
         while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
@@ -1028,7 +1031,7 @@ function late($id){
     
     $stmt = $conn->prepare('SELECT * FROM log WHERE id = :id AND dateIn = :date AND dateOut = :date LIMIT 2');
     $stmt->bindParam(':id', $id, PDO::PARAM_STR);
-    $stmt->bindParam(':date', $previousDate, PDO::PARAM_STR);
+    $stmt->bindParam(':date', $date, PDO::PARAM_STR);
     if($stmt->execute()){
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         $check = new DateTime($date . ' ' . $result['timeIn']);
@@ -1045,4 +1048,73 @@ function late($id){
         }
     }
 }
+function otHours($id){
+    require (__DIR__ . '/database.php');
+    $date = date("Y-m-d");
+    $previousDate = date("Y-m-d", strtotime($date . " -1 day"));
+    $timeLimit = "18:00:00";
+    $limit = new DateTime(date('Y-m-d') . ' ' . $timeLimit);
+    $hours = 0;
+
+    $stmt = $conn->prepare('SELECT * FROM log WHERE id = :id AND dateIn = :date AND dateOut = :date ORDER BY updateTime DESC  LIMIT 2');
+    $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+    $stmt->bindParam(':date', $date, PDO::PARAM_STR);
+    if($stmt->execute()){
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $check = new DateTime($date . ' ' . $result['timeOut']);
+        if ($check > $limit) {
+            $interval = $check->diff($limit);
+            $hours += $interval->days * 24 * 60 + $interval->h * 60 + $interval->i;
+            $hours /= 60;
+            $hours = number_format($hours, 2);
+            
+            $stmtUpdate = $conn->prepare('UPDATE payroll SET hrs = :hrs WHERE id = :id');
+            $stmtUpdate->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmtUpdate->bindParam(':hrs', $hours, PDO::PARAM_STR);
+            $stmtUpdate->execute();        
+        }else{
+            echo 'false';
+        }
+    }
+
+
+}
+function numberToWords($number) {
+    $units = ["", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
+    $teens = ["", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"];
+    $tens = ["", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+    $result = "";
+
+    if ($number == 0) {
+        $result = "zero";
+    } else {
+        // Extract digits
+        $thousands = floor($number / 1000);
+        $hundreds = floor(($number % 1000) / 100);
+        $tensAndUnits = $number % 100;
+
+        // Convert thousands to words
+        if ($thousands > 0) {
+            $result .= $units[$thousands] . " thousand ";
+        }
+
+        // Convert hundreds to words
+        if ($hundreds > 0) {
+            $result .= $units[$hundreds] . " hundred ";
+        }
+
+        // Convert tens and units to words
+        if ($tensAndUnits > 0) {
+            if ($tensAndUnits >= 11 && $tensAndUnits <= 19) {
+                $result .= $teens[$tensAndUnits - 10];
+            } else {
+                $result .= $tens[floor($tensAndUnits / 10)] . " " . $units[$tensAndUnits % 10];
+            }
+        }
+    }
+
+    return trim($result);
+}
+
 ?>

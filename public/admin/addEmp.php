@@ -30,7 +30,7 @@ include ('../../includes/admin/header.php');
                         </div>
                         <ul class="nav nav-pills justify-content-center">
                             <li class="nav-item">
-                                <a class="nav-link active bg-warning me-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
+                                <a class="nav-link active bg-warning me-2" href="addEmp.php"><button type="button" class="btn btn-sm">ADD EMPLOYEE</button></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active bg-secondary me-2" href="addOnCall.php"><button type="button" class="btn btn-sm">ADD ON-CALL</button></a>

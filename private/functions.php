@@ -123,7 +123,7 @@ function tableEmp(){
                         <tr>';
                             while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                                 echo '<tr>';
-                                echo '<td><button class="btn" onclick="qr(`'.$result['id'].'`)"><i class="fa-solid fa-qrcode""></i></button></td>';
+                                echo '<td><button class="btn" onclick="qrId(`'.$result['id'].'`)"><i class="fa-solid fa-qrcode""></i></button></td>';
                                 echo '<td>'.$result['id'].'</td>';
                                 echo '<td>'.$result['last'].'</td>';
                                 echo '<td>'.$result['first'].'</td>';
@@ -196,7 +196,7 @@ function tableOnCall(){
                         <tr>';
                             while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                                 echo '<tr>';
-                                echo '<td><button class="btn" onclick="qr(`'.$result['id'].'`)"><i class="fa-solid fa-qrcode""></i></button></td>';
+                                echo '<td><button class="btn" onclick="qrId(`'.$result['id'].'`)"><i class="fa-solid fa-qrcode""></i></button></td>';
                                 echo '<td>'.$result['id'].'</td>';
                                 echo '<td>'.$result['last'].'</td>';
                                 echo '<td>'.$result['first'].'</td>';
@@ -710,13 +710,64 @@ function deductions(){
                 </div>';
     }
 }
-function dashboard(){
+function dashboardEmp(){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM dashboard');
+    $stmt = $conn->prepare('SELECT * FROM dashboard WHERE type = "EMP"');
     if($stmt->execute()){
         $result = $stmt->rowCount();
         if($result == 0){
-            echo '<div class="alert alert-info mt-3" role="alert">
+            echo '<div class="alert alert-info mt-3 " role="alert">
+            No data to be displayed.
+        </div>';
+        }else{
+            if(isset($_SESSION['homepageBar']) && (isset($_SESSION['homepageFilter']))){
+                $search = $_SESSION['homepageBar'];
+                $filter = $_SESSION['homepageFilter'];
+                searchDashboardEmp($search, $filter);
+            }else{
+                echo '<div class="table-responsive text-center">
+                <table class="table table-sm table-striped table-success table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">JOB</th>
+                            <th scope="col">LAST TIMED-IN (DATE)</th>
+                            <th scope="col">LAST TIMED-IN (TIME)</th>
+                            <th scope="col">LAST TIMED-OUT (DATE)</th>
+                            <th scope="col">LAST TIMED-OUT (TIME)</th>
+                            <th scope="col">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider text-center">
+                        <tr>';
+                while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                    echo '<tr>';
+                    echo '<td>'.$result['id'].'</td>';
+                    echo '<td>'.$result['name'].'</td>';
+                    echo '<td>'.$result['job'].'</td>';
+                    echo '<td>'.$result['dateIn'].'</td>';
+                    echo '<td>'.$result['timeIn'].'</td>';
+                    echo '<td>'.$result['dateOut'].'</td>';
+                    echo '<td>'.$result['timeOut'].'</td>';
+                    echo '<td>'.$result['status'].'</td>';
+                    echo '</tr>';
+                }
+                echo '</tr>
+                </tbody>
+            </table>
+        </div>';
+            }
+        }
+    }
+}
+function dashboardOnCall(){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM dashboard WHERE type = "ONCALL"');
+    if($stmt->execute()){
+        $result = $stmt->rowCount();
+        if($result == 0){
+            echo '<div class="alert alert-info mt-3 " role="alert">
             No data to be displayed.
         </div>';
         }else{
@@ -725,10 +776,10 @@ function dashboard(){
                 $filter = $_SESSION['homepageFilter'];
                 unset($_SESSION['homepageBar']);
                 unset($_SESSION['homepageFilter']);
-                searchDashboard($search, $filter);
+                searchDashboardOnCall($search, $filter);
             }else{
                 echo '<div class="table-responsive text-center">
-                <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
+                <table class="table table-sm table-striped table-success table-hover table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
@@ -834,7 +885,7 @@ function empDashboard($username2){
                 $filter = $_SESSION['homepageFilter'];
                 unset($_SESSION['homepageBar']);
                 unset($_SESSION['homepageFilter']);
-                searchDashboard($search, $filter);
+                searchDashboardEmp($search, $filter);
             }else{
                 echo '<div class="table-responsive text-center">
                 <table class="table table-sm table-striped table-success table-hover table-bordered mt-3">
@@ -870,9 +921,9 @@ function empDashboard($username2){
         }
     }
 }
-function searchDashboard($search, $filter){
+function searchDashboardEmp($search, $filter){
     require (__DIR__ . '/database.php');
-    $stmt = $conn->prepare('SELECT * FROM dashboard WHERE '.$filter.' LIKE :search');
+    $stmt = $conn->prepare('SELECT * FROM dashboard WHERE '.$filter.' LIKE :search AND type = "EMP"');
     if($stmt->execute(['search' => '%'.$search.'%'])){
         $result = $stmt->rowCount();
         if($result == 0){
@@ -880,7 +931,52 @@ function searchDashboard($search, $filter){
             No data to be displayed.
         </div>';
         }else{
-            echo '<div class="table-responsive text-center mt-2" style="width: 1063px;">
+            echo '<div class="table-responsive text-center mt-2">
+                <table class="table table-sm table-striped table-success table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">NAME</th>
+                            <th scope="col">JOB</th>
+                            <th scope="col">TIMED-IN (DATE)</th>
+                            <th scope="col">TIMED-IN (TIME)</th>
+                            <th scope="col">TIMED-OUT (DATE)</th>
+                            <th scope="col">TIMED-OUT (TIME)</th>
+                            <th scope="col">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider text-center">
+                        <tr>';
+            while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
+                echo '<tr>';
+                echo '<td>'.$result['id'].'</td>';
+                echo '<td>'.$result['name'].'</td>';
+                echo '<td>'.$result['job'].'</td>';
+                echo '<td>'.$result['dateIn'].'</td>';
+                echo '<td>'.$result['timeIn'].'</td>';
+                echo '<td>'.$result['dateOut'].'</td>';
+                echo '<td>'.$result['timeOut'].'</td>';
+                echo '<td>'.$result['status'].'</td>';
+                echo '</tr>';
+            }
+            echo '</tr>
+                </tbody>
+            </table>
+        </div>';
+        }
+    }
+}
+function searchDashboardOnCall($search, $filter){
+    require (__DIR__ . '/database.php');
+    $stmt = $conn->prepare('SELECT * FROM dashboard WHERE '.$filter.' LIKE :search AND type = "ONCALL"');
+    if($stmt->execute(['search' => '%'.$search.'%'])){
+        $result = $stmt->rowCount();
+        if($result == 0){
+            echo '<div class="alert alert-info mt-3" role="alert">
+            No data to be displayed.
+        </div>';
+        }else{
+            echo '<div class="table-responsive text-center mt-2">
                 <table class="table table-sm table-striped table-success table-hover table-bordered">
                     <thead>
                         <tr>

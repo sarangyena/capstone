@@ -2,6 +2,8 @@
 session_start();
 require ('../private/database.php');
 require ('../private/functions.php');
+require_once '../private/phpqrcode/qrlib.php';
+
 
 if(isset($_POST['add'])){
     if(isset($_FILES['image'])){
@@ -11,6 +13,29 @@ if(isset($_POST['add'])){
         for($i = 1; $i <= 15; $i++){
             ${'add'.$i} = $_POST['add'.$i];
         }
+        $path = 'images/qrcode/';
+        $pathname = $path.$username.".png";
+        $filename = $username.".png";
+        $data = $username;
+
+
+        QRcode::png($data, $pathname, 'H', 4, 4);
+        $path1 = '../private/images/qrcode/'.$username.'.png';
+
+        if(file_exists($path1)){
+            $targetDir = '../private/images/uploads/';
+            $fileName = uniqid() . '_' . basename($path1);
+            $targetFile = $targetDir . $fileName;
+
+            if (copy($path1, $targetFile)) {
+                $stmtQr = $conn->prepare('INSERT INTO qrcode (id, name, path) VALUES (:id, :name, :path)');
+                $stmtQr->bindParam(':id', $username, PDO::PARAM_STR);
+                $stmtQr->bindParam(':name', $fileName, PDO::PARAM_STR);
+                $stmtQr->bindParam(':path', $targetFile, PDO::PARAM_STR);
+                $stmtQr->execute();
+            }
+        }
+
         $initial = substr($add3, 0, 1);
         if ($initial){
             $name = $add1.', '.$add2.' '.$initial.'.';

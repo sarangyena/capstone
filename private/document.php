@@ -3,7 +3,6 @@ require ('database.php');
 require ('functions.php');
 
 ob_start();
-include ("get_id.php")
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,12 +27,12 @@ include ("get_id.php")
 <body>
     <div class="container d-flex justify-content-center">
         <?php
-        $stmt = $conn->prepare('SELECT * FROM payroll WHERE id = :id');
-        $stmt->bindParam(':id', $_SESSION['printId'], PDO::PARAM_STR);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $deduction = $result['philhealth']-$result['sss']-$result['advance'];
-        $net = $result['total']-$deduction;
+        $stmtPayroll = $conn->prepare('SELECT * FROM payroll WHERE id = :id');
+        $stmtPayroll->bindParam(':id', $_SESSION['printId'], PDO::PARAM_STR);
+        $stmtPayroll->execute();
+        $payrollResult = $stmtPayroll->fetch(PDO::FETCH_ASSOC);
+        $deduction = $payrollResult['philhealth']-$payrollResult['sss']-$payrollResult['advance'];
+        $net = $payrollResult['total']-$deduction;
 
         $path = 'images/logo.png';
         $type = pathinfo($path, PATHINFO_EXTENSION);
@@ -48,11 +47,11 @@ include ("get_id.php")
             <tbody>
                 <tr>
                     <th>EMPLOYEE NAME</th>
-                    <td><?php echo $result['name']; ?></td>
+                    <td><?php echo $payrollResult['name']; ?></td>
                 </tr>
                 <tr>
                     <th>DESIGNATION</th>
-                    <td><?php echo $result['job']; ?></td>
+                    <td><?php echo $payrollResult['job']; ?></td>
                 </tr>
                 <tr>
                     <th>WEEK</th>
@@ -71,25 +70,25 @@ include ("get_id.php")
                 </tr>
                 <tr>
                     <td>SALARY</td>
-                    <td><?php echo $result['salary']; ?></td>
+                    <td><?php echo $payrollResult['salary']; ?></td>
                     <td>PHILHEALTH</td>
-                    <td><?php echo $result['philhealth']; ?></td>
+                    <td><?php echo $payrollResult['philhealth']; ?></td>
                 </tr>
                 <tr>
                     <td>OVERTIME PAY</td>
-                    <td><?php echo $result['ot']; ?></td>
+                    <td><?php echo $payrollResult['ot']; ?></td>
                     <td>SSS</td>
-                    <td><?php echo $result['sss']; ?></td>
+                    <td><?php echo $payrollResult['sss']; ?></td>
                 </tr>
                 <tr>
                     <td>HOLIDAY</td>
-                    <td><?php echo $result['holiday']; ?></td>
+                    <td><?php echo $payrollResult['holiday']; ?></td>
                     <td>CASH ADVANCE</td>
-                    <td><?php echo $result['advance']; ?></td>
+                    <td><?php echo $payrollResult['advance']; ?></td>
                 </tr>
                 <tr>
                     <td>TOTAL AMOUNT</td>
-                    <td><?php echo $result['total']; ?></td>
+                    <td><?php echo $payrollResult['total']; ?></td>
                     <td>TOTAL DEDUCTION</td>
                     <td><?php echo $deduction; ?></td>
                 </tr>
@@ -113,5 +112,8 @@ include ("get_id.php")
             </tbody>
         </table>
     </div>
+    <?php
+    unset($_SESSION['printId']);
+    ?>
 </body>
 </html>

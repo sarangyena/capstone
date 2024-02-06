@@ -9,7 +9,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     days($username);
     late($username);
     otHours($username);
-    if($data['latitude'] = '14.8443' && $data['longitude'] = '120.810204'){
+    $userLatitude = number_format($data['latitude'], 2);
+    $userLongitude = number_format($data['longitude'], 2);
+    $latitude = number_format(14.8443, 2);
+    $longitude = number_format(120.810204, 2);
+    if($userLatitude == $latitude && $userLongitude == $longitude){
         $location = "AL DAWAH PRODUCERS COOPERATIVE";
     }else{
         $location = "OTHER LOCATION";

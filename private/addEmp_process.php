@@ -19,6 +19,21 @@ if(isset($_POST['add'])){
 
 
         QRcode::png($data, $pathname, 'H', 4, 4);
+        $path1 = '../private/images/qrcode/'.$username.'.png';
+
+        if(file_exists($path1)){
+            $targetDir = '../private/images/uploads/';
+            $fileName = uniqid() . '_' . basename($path1);
+            $targetFile = $targetDir . $fileName;
+
+            if (copy($path1, $targetFile)) {
+                $stmtQr = $conn->prepare('INSERT INTO qrcode (id, name, path) VALUES (:id, :name, :path)');
+                $stmtQr->bindParam(':id', $username, PDO::PARAM_STR);
+                $stmtQr->bindParam(':name', $fileName, PDO::PARAM_STR);
+                $stmtQr->bindParam(':path', $targetFile, PDO::PARAM_STR);
+                $stmtQr->execute();
+            }
+        }
 
         
         $initial = substr($add3, 0, 1);

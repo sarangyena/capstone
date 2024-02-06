@@ -89,18 +89,19 @@ include ('../../includes/admin/header.php');
                         employee.classList.remove('text-black');
                         employee.className += " bg-success text-white active";
                     });
-                    function qr(id) {
-                        var qrId = id;
-                        fetch('../../private/qrcode_generator.php', {
+                    function qrId(id) {
+                        fetch('../../private/qrcode_reader.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: qrId
+                            body: id
                         })
                         .then(response => response.json())
                         .then(data => {
-                            console.log(data);
+                            if(data){
+                                window.location.href = "../../private/qrcode_reader.php";
+                            }
                         })
                         .catch(error => {
                             console.error('Error:', error);

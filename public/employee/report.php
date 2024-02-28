@@ -14,6 +14,25 @@ include ('../../includes/employee/header.php');
                         report.classList.remove('text-black');
                         report.className += " bg-success text-white active";
                     });
+                    function qrId(id) {
+                        fetch('../../private/qrcode_reader.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: id
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data){
+                                window.location.href = "../../private/qrcode_reader.php";
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                        
+                    }
                     </script>
 <?php
 include ('../../includes/employee/footer.php');

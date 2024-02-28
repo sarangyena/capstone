@@ -28,7 +28,7 @@ ob_start();
     <div class="container d-flex justify-content-center">
         <?php
         $stmtPayroll = $conn->prepare('SELECT * FROM payroll WHERE id = :id');
-        $stmtPayroll->bindParam(':id', $_SESSION['printId'], PDO::PARAM_STR);
+        $stmtPayroll->bindParam(':id', $_SESSION['rowId'], PDO::PARAM_STR);
         $stmtPayroll->execute();
         $payrollResult = $stmtPayroll->fetch(PDO::FETCH_ASSOC);
         $deduction = $payrollResult['philhealth']-$payrollResult['sss']-$payrollResult['advance'];
@@ -42,6 +42,7 @@ ob_start();
         ?>
         <h3 class="text-center">AL DAWAH PRODUCERS COOPERATIVE</h3>
         <h5 class="text-center">303 YUMUL ST. BARANGAY GOMEZ 4316 LOPEZ, PHILIPPINES</h5>
+        <h3><?php echo date('Y-m-d h:i:s a')?></h3>
 
         <table class="table table-striped table-bordered table-condensed">
             <tbody>

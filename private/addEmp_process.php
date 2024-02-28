@@ -64,9 +64,13 @@ if(isset($_POST['add'])){
         $stmt->bindParam(':job', $add7, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);
         $stmt->execute();
+        
+        $startDate = date('F d', strtotime('monday this week'));
+        $currentWeek = $startDate.' - '.date('d').' ('.date('Y').')';
 
-        $stmt = $conn->prepare('INSERT INTO payroll (id, name, job, rate) VALUES (:id, :name, :job, :rate)');
+        $stmt = $conn->prepare('INSERT INTO payroll (id, week, name, job, rate) VALUES (:id, :week, :name, :job, :rate)');
         $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':week', $currentWeek, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':job', $add7, PDO::PARAM_STR);
         $stmt->bindParam(':rate', $add11, PDO::PARAM_STR);

@@ -4,11 +4,10 @@ require ('../private/database.php');
 require ('../private/functions.php');
 require_once '../private/phpqrcode/qrlib.php';
 
-
 if(isset($_POST['add'])){
     if(isset($_FILES['image'])){
         date_default_timezone_set('Asia/Manila');
-        $username = onCallId();
+        $username = empId();
         $hired = date('Y-m-d H:i:s');
         for($i = 1; $i <= 15; $i++){
             ${'add'.$i} = $_POST['add'.$i];
@@ -36,6 +35,7 @@ if(isset($_POST['add'])){
             }
         }
 
+        
         $initial = substr($add3, 0, 1);
         if ($initial){
             $name = $add1.', '.$add2.' '.$initial.'.';
@@ -64,6 +64,19 @@ if(isset($_POST['add'])){
         $stmt->bindParam(':job', $add7, PDO::PARAM_STR);
         $stmt->bindParam(':status', $status, PDO::PARAM_STR);
         $stmt->execute();
+        
+        $startDate = date('F d', strtotime('monday this week'));
+        $currentWeek = $startDate.' - '.date('d').' ('.date('Y').')';
+
+        $stmt = $conn->prepare('INSERT INTO payroll (id, week, name, job, rate) VALUES (:id, :week, :name, :job, :rate)');
+        $stmt->bindParam(':id', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':week', $currentWeek, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':job', $add7, PDO::PARAM_STR);
+        $stmt->bindParam(':rate', $add11, PDO::PARAM_STR);
+        $stmt->execute();
+
+
 
         //Upload Image
         $file = $_FILES['image'];
@@ -83,7 +96,7 @@ if(isset($_POST['add'])){
             exit();
         } else {
             $filename = $uniqueName;
-            $directory = '../private/images/onCall/'; 
+            $directory = '../private/images/oncall/'; 
             $uploadPath = $directory . $filename;
             if(move_uploaded_file($tmp_name, $uploadPath)) {
             $stmt= $conn->prepare("INSERT INTO image (uid, name, size, type, path) VALUES (?,?,?,?,?)");
@@ -93,6 +106,7 @@ if(isset($_POST['add'])){
             $stmt->bindParam(4, $type, PDO::PARAM_STR);
             $stmt->bindParam(5, $uploadPath, PDO::PARAM_STR);
             if($stmt->execute()){
+
                 $_SESSION['success'] = 'success';
                 echo header('Location: ../public/admin/addOnCall.php');
                 exit();
@@ -107,6 +121,8 @@ if(isset($_POST['add'])){
                 exit();
             }
         }
+
+        
     }else{
         echo header('Location: ../public/admin/addOnCall.php');
         exit();

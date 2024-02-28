@@ -435,6 +435,7 @@ function tablePayroll(){
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">WEEK</th>
                             <th scope="col">NAME</th>
                             <th scope="col">JOB</th>
                             <th scope="col">RATE</th>
@@ -450,7 +451,8 @@ function tablePayroll(){
                             <th scope="col">ADVANCE</th>
                             <th scope="col">AMOUNT</th>
                             <th scope="col">EDIT</th>
-                            <th scope="col">PRINT</th>
+                            <th scope="col">PAYSLIP</th>
+                            <th scope="col">PAYROLL</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider text-center">
@@ -458,6 +460,7 @@ function tablePayroll(){
                 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr>';
                     echo '<td>'.$result['id'].'</td>';
+                    echo '<td>'.$result['week'].'</td>';
                     echo '<td>'.$result['name'].'</td>';
                     echo '<td>'.$result['job'].'</td>';
                     echo '<td class="text-decoration-underline">'.$result['rate'].'</td>';
@@ -473,7 +476,8 @@ function tablePayroll(){
                     echo '<td class="text-decoration-underline">'.$result['advance'].'</td>';
                     echo '<td>'.$result['total'].'</td>';
                     echo '<td><button class="btn fa-solid fa-pen" data-bs-toggle="modal" data-bs-target="#payroll1" onclick="getRowId(`'.$result['id'].'`)"></button></td>';
-                    echo '<td><button class="btn fa-solid fa-print" onclick="printId(`'.$result['id'].'`)"></button></td>';
+                    echo '<td><button class="btn fa-solid fa-print" onclick="payslip(`'.$result['id'].'`)"></button></td>';
+                    echo '<td><button class="btn fa-solid fa-print" onclick="payroll(`'.$result['id'].'`)"></button></td>';
                     echo '</tr>';
                 }
                 echo '</tr>
@@ -591,6 +595,7 @@ function logTable(){
                             <th scope="col">TIMED-OUT (DATE)</th>
                             <th scope="col">TIMED-OUT (TIME)</th>
                             <th scope="col">LOCATION</th>
+                            <th scope="col">LATITUDE, LONGITUDE</th>
                         </tr>
                     </thead>
                     <tbody class="table-group-divider text-center">
@@ -605,6 +610,7 @@ function logTable(){
                     echo '<td>'.$result['dateOut'].'</td>';
                     echo '<td>'.$result['timeOut'].'</td>';
                     echo '<td>'.$result['location'].'</td>';
+                    echo '<td>'.$result['specificLocation'].'</td>';
                     echo '</tr>';
                 }
                 echo '</tr>
@@ -840,9 +846,12 @@ function status(){
 function compute(){
     require (__DIR__ . '/database.php');
     $stmt = $conn->prepare('SELECT * FROM payroll');
-    if($stmt->execute()){
+    $stmt->execute();
+    $row = $stmt->rowCount();
+    if($row > 0){
         while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
             $id = $result['id'];
+            $week = $result['week'];
             $rate = $result['rate'];
             $holiday = $result['holiday'];
             $philhealth = $result['philhealth'];
@@ -851,22 +860,33 @@ function compute(){
             $hrs = $result['hrs'];
             $days = $result['days'];
             $late = $result['late'];
-            $ot = $result['ot'];
             
             $salary = $rate*$days+$rate/8*$late;
             $rph = $rate/8+$rate/8*0.20;
             $otPay = $rph*$hrs;
             $total = $salary+$otPay+$holiday-$philhealth-$sss-$advance;
             
-            $stmtUpdate = $conn->prepare('UPDATE payroll SET salary = :salary, rph = :rph, ot = :ot, total = :total WHERE id = :id');
-            $stmtUpdate->bindParam(':id', $id, PDO::PARAM_STR);
-            $stmtUpdate->bindParam(':salary', $salary, PDO::PARAM_STR);
-            $stmtUpdate->bindParam(':rph', $rph, PDO::PARAM_STR);
-            $stmtUpdate->bindParam(':ot', $otPay, PDO::PARAM_STR);
-            $stmtUpdate->bindParam(':total', $total, PDO::PARAM_STR);
-            $stmtUpdate->execute();
-            
+            $week = trim(substr($week, 0, strpos($week, " -")));
+            $week = date('F d', strtotime($week));
+            $startDate = date('F d', strtotime('monday this week'));
+            if($startDate > $week){
+                $week = $startDate.' - '.date('d').' ('.date('Y').')';
+                $stmtInsert = $conn->prepare('UPDATE payroll SET week = :week, days = 0, late = 0, salary = 0, hrs = 0, holiday = 0, philhealth = 0, sss = 0, advance = 0 WHERE id = :id');
+                $stmtInsert->bindParam(':id', $id, PDO::PARAM_STR);
+                $stmtInsert->bindParam(':week', $week, PDO::PARAM_STR);
+                $stmtInsert->execute();
+            }else{
+                $stmtUpdate = $conn->prepare('UPDATE payroll SET salary = :salary, rph = :rph, ot = :ot, total = :total WHERE id = :id');
+                $stmtUpdate->bindParam(':id', $id, PDO::PARAM_STR);
+                $stmtUpdate->bindParam(':salary', $salary, PDO::PARAM_STR);
+                $stmtUpdate->bindParam(':rph', $rph, PDO::PARAM_STR);
+                $stmtUpdate->bindParam(':ot', $otPay, PDO::PARAM_STR);
+                $stmtUpdate->bindParam(':total', $total, PDO::PARAM_STR);
+                $stmtUpdate->execute();
+            }
         }
+    }else{
+
     }
 }
 function empDashboard($username2){
@@ -1033,7 +1053,9 @@ function payrollEmp($username1){
                 <table class="table table-sm table-striped table-success table-hover table-bordered">
                     <thead>
                         <tr>
+                            <th scope="col">QR</th>
                             <th scope="col">ID</th>
+                            <th scope="col">WEEK</th>
                             <th scope="col">NAME</th>
                             <th scope="col">JOB</th>
                             <th scope="col">RATE</th>
@@ -1054,7 +1076,9 @@ function payrollEmp($username1){
                         <tr>';
                 while ($result = $stmt->fetch(PDO::FETCH_ASSOC)){
                     echo '<tr>';
+                    echo '<td><button class="btn" onclick="qrId(`'.$result['id'].'`)"><i class="fa-solid fa-qrcode""></i></button></td>';
                     echo '<td>'.$result['id'].'</td>';
+                    echo '<td>'.$result['week'].'</td>';
                     echo '<td>'.$result['name'].'</td>';
                     echo '<td>'.$result['job'].'</td>';
                     echo '<td>'.$result['rate'].'</td>';

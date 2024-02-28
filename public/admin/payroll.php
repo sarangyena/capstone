@@ -69,6 +69,7 @@ compute();
                                             <button type="submit" class="btn btn-success" name="editPayroll">UPDATE</button>
                                         </div>
                                     </form>
+                                    <button>asasas</button>
                                 </div>
                             </div>
                         </div>
@@ -89,9 +90,9 @@ compute();
                     </div>
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
-                        let pill = document.getElementById("payroll");
-                        payroll.classList.remove('text-black');
-                        payroll.className += " bg-success text-white active";
+                        let pill = document.getElementById("payroll2");
+                        payroll2.classList.remove('text-black');
+                        payroll2.className += " bg-success text-white active";
                     });
                     function getRowId(id) {
                         var rowId = id;
@@ -120,8 +121,8 @@ compute();
                         });
                         
                     }
-                    function printId(id) {
-                        fetch('../../private/print_process.php', {
+                    function payslip(id) {
+                        fetch('../../private/payslip_process.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -131,7 +132,26 @@ compute();
                         .then(response => response.json())
                         .then(data => {
                             if(data){
-                                window.location.href = "../../private/print_process.php";
+                                window.location.href = "../../private/payslip_process.php";
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                        
+                    }
+                    function payroll(id) {
+                        fetch('../../private/print_payroll.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: id
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data){
+                                window.location.href = "../../private/print_payroll.php";
                             }
                         })
                         .catch(error => {

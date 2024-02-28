@@ -28,8 +28,11 @@ include ('../../includes/employee/header.php');
                                     $deduction += $result['philhealth']+$result['sss']+$result['advance'];
                                     $deduction = floatVal($deduction);
                                 }
-                                
-                                echo '<h1 class="text-center mt-4">-₱'.$deduction.'</h1>';
+                                if($deduction == 0){
+                                    echo '<h1 class="text-center mt-4">₱ '.$deduction.'</h1>';
+                                }else{
+                                    echo '<h1 class="text-center mt-4">-₱ '.$deduction.'</h1>';
+                                }
                                 ?>
                             </div>
                             <div class="col bg-white border border-black rounded-2 text-black">

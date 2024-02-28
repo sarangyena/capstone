@@ -41,13 +41,10 @@ checkAuthentication();
                                 <a class="nav-link text-center text-black" id="employee" href="addEmp.php">EMPLOYEE</a>
                             </li>
                             <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="payroll" href="payroll.php">PAYROLL</a>
+                                <a class="nav-link text-center text-black" id="payroll2" href="payroll.php">PAYROLL</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-center text-black" id="about" href="about.php">ABOUT</a>
-                            </li>
-                            <li class="nav-item mt-3">
-                                <a class="nav-link text-center text-black" id="admin" href="regAdmin.php">REGISTER ADMIN</a>
                             </li>
                             <li class="nav-item mt-3">
                                 <a class="nav-link text-center text-black" id="password" href="changePass.php">CHANGE PASSWORD</a>

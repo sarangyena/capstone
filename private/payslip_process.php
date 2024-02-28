@@ -4,12 +4,12 @@ ob_start();
 require ('database.php');
 require '../vendor/autoload.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $print = file_get_contents('php://input');
-    $_SESSION['printId'] = $print;
-    echo json_encode($_SESSION['printId']);
+    $id = file_get_contents('php://input');
+    $_SESSION['rowId'] = $id;
+    echo json_encode($_SESSION['rowId']);
 }else{
     $dompdf = new Dompdf\Dompdf(['isRemoteEnabled' => true]);
-    include("document.php");
+    include("payslip.php");
     $html = ob_get_contents();
     $dompdf->loadHtml($html);
     $dompdf->setPaper('A4', 'potrait');

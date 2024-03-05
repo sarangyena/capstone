@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2024 at 09:20 AM
+-- Generation Time: Mar 05, 2024 at 06:50 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,8 +72,8 @@ CREATE TABLE `dashboard` (
 --
 
 INSERT INTO `dashboard` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `timeOut`, `status`, `type`) VALUES
-('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-05', '11:41 PM', '2024-02-05', '11:22 PM', 'ACTIVE', 'EMP'),
-('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-06', '03:31 PM', '2024-02-06', '03:31 PM', 'ACTIVE', 'EMP'),
+('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-06', '06:10 PM', '2024-02-06', '04:55 PM', 'ACTIVE', 'EMP'),
+('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-06', '04:43 PM', '2024-02-06', '04:54 PM', 'ACTIVE', 'EMP'),
 ('O-000', 'FLORENDO, EDRIAN E.', 'GENERAL MANAGER', '', '', '', '', 'NEW', 'ONCALL'),
 ('E-002', 'BUSA, RICHER V.', 'FARMER', '', '', '', '', 'NEW', ''),
 ('O-000', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', ''),
@@ -83,7 +83,9 @@ INSERT INTO `dashboard` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `ti
 ('O-000', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', ''),
 ('O-000', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', ''),
 ('O-000', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', ''),
-('O-000', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', '');
+('O-000', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', ''),
+('E-003', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', ''),
+('E-004', 'FLORENDO, EDRIAN E.', 'FARMER', '', '', '', '', 'NEW', '');
 
 -- --------------------------------------------------------
 
@@ -120,7 +122,9 @@ CREATE TABLE `employee` (
 INSERT INTO `employee` (`id`, `last`, `first`, `middle`, `status`, `email`, `phone`, `job`, `sss`, `philhealth`, `pagibig`, `rate`, `address`, `eName`, `ePhone`, `eAddress`, `hired`, `hashed`, `qr`) VALUES
 ('E-000', 'FLORENDO', 'EDRIAN', 'ERNESTO', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '09550840452', 'TECH SUPPORT', '12345', '12345', '12345', '430', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', 'EDRIAN ERNESTO FLORENDO', '09550840452', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', '2024-02-05 10:53:36', '$2y$10$cBDUvhJuM3F/3wvd5R2uKetsUerW7OF7Y7ZB.t8Ql7oa4zi/Ld8y6', ''),
 ('E-001', 'FLORENDO', 'EDRIAN', 'ERNESTO', 'MARRIED', 'EDRIANFLORENDO18@GMAIL.COM', '09550840452', 'SECRETARY', '12345', '12345', '12345', '430', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', 'EDRIAN ERNESTO FLORENDO', '09550840452', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', '2024-02-05 23:33:00', '$2y$10$TYP9nMuKbo7MKJO6h0/N1uglCfZi8mqWVvXEffllXXzFesEAyMvEm', ''),
-('E-002', 'BUSA', 'RICHER', 'VON', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '09550840452', 'FARMER', '12345', '12345', '12345', '430', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', 'EDRIAN ERNESTO FLORENDO', '09550840452', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', '2024-02-06 15:32:06', '$2y$10$Ge6qrMH0AiTcb0u2B4cD6ehSAkUOV.4SPFWXCw8q/L0nl24gtMeCm', '');
+('E-002', 'BUSA', 'RICHER', 'VON', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '09550840452', 'FARMER', '12345', '12345', '12345', '430', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', 'EDRIAN ERNESTO FLORENDO', '09550840452', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', '2024-02-06 15:32:06', '$2y$10$Ge6qrMH0AiTcb0u2B4cD6ehSAkUOV.4SPFWXCw8q/L0nl24gtMeCm', ''),
+('E-003', 'FLORENDO', 'EDRIAN', 'ERNESTO', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '09550840452', 'FARMER', '12345', '12345', '12345', '430', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', 'EDRIAN ERNESTO FLORENDO', '09550840452', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', '2024-02-19 19:48:33', '$2y$10$DrPPiNMswSXeOx669FOSh.7d5MteNd7wxTDdOwRTWUrA9.iiEjBv.', ''),
+('E-004', 'FLORENDO', 'EDRIAN', 'ERNESTO', 'SINGLE', 'EDRIANFLORENDO18@GMAIL.COM', '09550840452', 'FARMER', '12345', '12345', '12345', '430', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', 'EDRIAN ERNESTO FLORENDO', '09550840452', '1319 STO.CRISTO EXT. ST. TONDO, MANILA', '2024-02-19 19:49:43', '$2y$10$2mRv90jZxwAJnH0hdQZ8n.JOkjX6NE/jMYoguBnR.I1g5ZEQejEqm', '');
 
 -- --------------------------------------------------------
 
@@ -149,7 +153,9 @@ INSERT INTO `image` (`uid`, `name`, `size`, `type`, `path`) VALUES
 ('O-000', 'O-000.png', '18853', 'image/png', '../private/images/onCall/O-000.png'),
 ('O-000', 'O-000.jpg', '547284', 'image/jpeg', '../private/images/onCall/O-000.jpg'),
 ('O-000', 'O-000.jpg', '547284', 'image/jpeg', '../private/images/onCall/O-000.jpg'),
-('O-000', 'O-000.jpg', '547284', 'image/jpeg', '../private/images/onCall/O-000.jpg');
+('O-000', 'O-000.jpg', '547284', 'image/jpeg', '../private/images/onCall/O-000.jpg'),
+('E-003', 'E-003.png', '1645', 'image/png', '../private/images/employee/E-003.png'),
+('E-004', 'E-004.png', '1645', 'image/png', '../private/images/employee/E-004.png');
 
 -- --------------------------------------------------------
 
@@ -166,6 +172,7 @@ CREATE TABLE `log` (
   `dateOut` varchar(255) NOT NULL,
   `timeOut` varchar(255) NOT NULL,
   `location` varchar(255) NOT NULL,
+  `specificLocation` varchar(255) NOT NULL,
   `log` tinyint(1) NOT NULL,
   `updateTime` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -174,15 +181,19 @@ CREATE TABLE `log` (
 -- Dumping data for table `log`
 --
 
-INSERT INTO `log` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `timeOut`, `location`, `log`, `updateTime`) VALUES
-('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-05', '08:10 AM', '2024-02-05', '12:30 PM', 'AL DAWAH PRODUCERS COOPERATIVE', 0, '1707101901'),
-('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-05', '01:10 PM', '2024-02-05', '09:30 PM', 'AL DAWAH PRODUCERS COOPERATIVE', 0, '1707146531'),
-('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-05', '09:30 AM', '2024-02-05', '12:10 PM', 'AL DAWAH PRODUCERS COOPERATIVE', 0, '1707147232'),
-('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-05', '01:30 PM', '2024-02-05', '08:30 PM', 'AL DAWAH PRODUCERS COOPERATIVE', 0, '1707147498'),
-('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-05', '11:41 PM', '', '', 'AL DAWAH PRODUCERS COOPERATIVE', 1, '1707147663'),
-('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-05', '11:41 PM', '2024-02-06', '03:27 PM', 'AL DAWAH PRODUCERS COOPERATIVE', 0, '1707204450'),
-('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-06', '03:27 PM', '2024-02-06', '03:31 PM', 'AL DAWAH PRODUCERS COOPERATIVE', 0, '1707204683'),
-('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-06', '03:31 PM', '', '', 'OTHER LOCATION', 1, '1707204684');
+INSERT INTO `log` (`id`, `name`, `job`, `dateIn`, `timeIn`, `dateOut`, `timeOut`, `location`, `specificLocation`, `log`, `updateTime`) VALUES
+('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-05', '08:10 AM', '2024-02-05', '12:30 PM', 'AL DAWAH PRODUCERS COOPERATIVE', '', 0, '1707101901'),
+('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-05', '01:10 PM', '2024-02-05', '09:30 PM', 'AL DAWAH PRODUCERS COOPERATIVE', '', 0, '1707146531'),
+('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-05', '09:30 AM', '2024-02-05', '12:10 PM', 'AL DAWAH PRODUCERS COOPERATIVE', '', 0, '1707147232'),
+('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-05', '01:30 PM', '2024-02-05', '08:30 PM', 'AL DAWAH PRODUCERS COOPERATIVE', '', 0, '1707147498'),
+('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-05', '11:41 PM', '2024-02-06', '04:54 PM', 'AL DAWAH PRODUCERS COOPERATIVE', '', 0, '1707209650'),
+('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-05', '11:41 PM', '2024-02-06', '03:27 PM', 'AL DAWAH PRODUCERS COOPERATIVE', '', 0, '1707204450'),
+('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-06', '03:27 PM', '2024-02-06', '03:31 PM', 'AL DAWAH PRODUCERS COOPERATIVE', '', 0, '1707204683'),
+('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-06', '03:31 PM', '2024-02-06', '04:43 PM', 'OTHER LOCATION', '', 0, '1707209001'),
+('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', '2024-02-06', '04:43 PM', '2024-02-06', '04:54 PM', 'OTHER LOCATION', '', 0, '1707209644'),
+('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-06', '04:54 PM', '2024-02-06', '04:54 PM', 'OTHER LOCATION', '', 0, '1707209658'),
+('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-06', '04:55 PM', '2024-02-06', '04:55 PM', 'OTHER LOCATION', '', 0, '1707209742'),
+('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', '2024-02-06', '06:10 PM', '', '', 'OTHER LOCATION', '', 1, '1707214228');
 
 -- --------------------------------------------------------
 
@@ -226,6 +237,7 @@ INSERT INTO `oncall` (`id`, `last`, `first`, `middle`, `status`, `email`, `phone
 
 CREATE TABLE `payroll` (
   `id` varchar(255) NOT NULL,
+  `week` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `job` varchar(255) NOT NULL,
   `rate` float NOT NULL,
@@ -246,10 +258,12 @@ CREATE TABLE `payroll` (
 -- Dumping data for table `payroll`
 --
 
-INSERT INTO `payroll` (`id`, `name`, `job`, `rate`, `days`, `late`, `salary`, `rph`, `hrs`, `ot`, `holiday`, `philhealth`, `sss`, `advance`, `total`) VALUES
-('E-000', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', 430, 14, 7, 6396.25, 64.5, 3.5, 225.75, 0, 100, 0, 0, 6522),
-('E-001', 'FLORENDO, EDRIAN E.', 'SECRETARY', 430, 1, 7.7, 843.875, 64.5, 2.5, 161.25, 0, 0, 0, 0, 1005.12),
-('E-002', 'BUSA, RICHER V.', 'FARMER', 430, 0, 0, 0, 64.5, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `payroll` (`id`, `week`, `name`, `job`, `rate`, `days`, `late`, `salary`, `rph`, `hrs`, `ot`, `holiday`, `philhealth`, `sss`, `advance`, `total`) VALUES
+('E-000', 'February 26 - 28 (2024)', 'FLORENDO, EDRIAN E.', 'TECH SUPPORT', 430, 0, 0, 0, 64.5, 0, 0, 0, 0, 0, 0, 0),
+('E-001', 'February 26 - 28 (2024)', 'FLORENDO, EDRIAN E.', 'SECRETARY', 430, 0, 0, 0, 64.5, 0, 0, 0, 0, 0, 0, 0),
+('E-002', 'February 26 - 28 (2024)', 'BUSA, RICHER V.', 'FARMER', 430, 0, 0, 0, 64.5, 0, 0, 0, 0, 0, 0, 0),
+('E-003', 'February 26 - 28 (2024)', 'FLORENDO, EDRIAN E.', 'FARMER', 430, 0, 0, 0, 64.5, 0, 0, 0, 0, 0, 0, 0),
+('E-004', 'February 26 - 28 (2024)', 'FLORENDO, EDRIAN E.', 'FARMER', 430, 0, 0, 0, 64.5, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -268,7 +282,9 @@ CREATE TABLE `qrcode` (
 --
 
 INSERT INTO `qrcode` (`id`, `name`, `path`) VALUES
-('O-000', '65c1e8876974c_O-000.png', '../private/images/uploads/65c1e8876974c_O-000.png');
+('O-000', '65c1e8876974c_O-000.png', '../private/images/uploads/65c1e8876974c_O-000.png'),
+('E-003', '65d340117c0a7_E-003.png', '../private/images/uploads/65d340117c0a7_E-003.png'),
+('E-004', '65d340571664f_E-004.png', '../private/images/uploads/65d340571664f_E-004.png');
 
 -- --------------------------------------------------------
 

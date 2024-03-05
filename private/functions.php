@@ -1040,7 +1040,7 @@ function payrollEmp($username1){
         if($result == 0){
             echo '<div class="alert alert-info mt-3" role="alert">
             No data to be displayed.
-        </div>';
+        </div>';    
         }else{
             if(isset($_SESSION['payrollBar']) && (isset($_SESSION['payrollFilter']))){
                 $search = $_SESSION['payrollBar'];
